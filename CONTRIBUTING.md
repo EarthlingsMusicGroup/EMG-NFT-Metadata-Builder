@@ -23,7 +23,7 @@ Thank you for your interest in contributing! This document provides guidelines a
 2. Clone your fork:
    ```bash
    git clone https://github.com/BankkRoll/nft-metadata-builder.git
-   cd nft-metadata-builder
+   cd EMG-NFT-Metadata-Builder
    ```
 
 3. Install dependencies:

@@ -13,7 +13,7 @@ The application is fully client-side with no backend required. All data is store
 ```bash
 # Clone the repository
 git clone https://github.com/BankkRoll/nft-metadata-builder.git
-cd nft-metadata-builder
+cd EMG-NFT-Metadata-Builder
 
 # Install dependencies
 pnpm install
