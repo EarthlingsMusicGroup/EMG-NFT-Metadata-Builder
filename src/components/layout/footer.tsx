@@ -13,7 +13,7 @@ interface LinkSection {
   links: LinkItem[];
 }
 
-const GITHUB_REPO_URL = "https://github.com/BankkRoll/nft-metadata-builder";
+const GITHUB_REPO_URL = "https://github.com/EarthlingsMusicGroup/EMG---NFT-Metadata-Builder";
 
 const linkSections: LinkSection[] = [
   {
