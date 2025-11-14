@@ -27,12 +27,12 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/EarthlingsMusicGroup/EMG---NFT-Metadata-Builder.git"
+    "url": "https://github.com/EarthlingsMusicGroup/EMG-NFT-Metadata-Builder.git"
   },
   "bugs": {
-    "url": "https://github.com/EarthlingsMusicGroup/EMG---NFT-Metadata-Builder/issues"
+    "url": "https://github.com/EarthlingsMusicGroup/EMG-NFT-Metadata-Builder/issues"
   },
-  "homepage": "https://github.com/EarthlingsMusicGroup/EMG---NFT-Metadata-Builder#readme",
+  "homepage": "https://github.com/EarthlingsMusicGroup/EMG-NFT-Metadata-Builder#readme",
   "scripts": {
     "build": "next build",
     "dev": "next dev",

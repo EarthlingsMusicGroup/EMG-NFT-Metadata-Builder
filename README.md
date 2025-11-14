@@ -12,7 +12,7 @@ The application is fully client-side with no backend required. All data is store
 
 ```bash
 # Clone the repository
-git clone https://github.com/EarthlingsMusicGroup/EMG---NFT-Metadata-Builder.git
+git clone https://github.com/EarthlingsMusicGroup/EMG-NFT-Metadata-Builder.git
 cd EMG-NFT-Metadata-Builder
 
 # Install dependencies
@@ -162,8 +162,8 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ## Support
 
-- [Report a Bug](https://github.com/EarthlingsMusicGroup/EMG---NFT-Metadata-Builder/issues)
-- [Request a Feature](https://github.com/EarthlingsMusicGroup/EMG---NFT-Metadata-Builder/issues)
+- [Report a Bug](https://github.com/EarthlingsMusicGroup/EMG-NFT-Metadata-Builder/issues)
+- [Request a Feature](https://github.com/EarthlingsMusicGroup/EMG-NFT-Metadata-Builder/issues)
 - [Documentation](docs/)
-- [Discussions](https://github.com/EarthlingsMusicGroup/EMG---NFT-Metadata-Builder/discussions)
+- [Discussions](https://github.com/EarthlingsMusicGroup/EMG-NFT-Metadata-Builder/discussions)
 
