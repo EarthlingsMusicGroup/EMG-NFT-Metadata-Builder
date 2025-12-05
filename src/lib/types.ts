@@ -81,8 +81,6 @@ export interface XRPMetadata extends BaseMetadata {
   attributes?: MetadataAttribute[];
   collection?: {
     name: string;
-    family?: string;
-    description?: string;
   };
   additional_metadata?: Record<string, string | number | boolean>;
   token_taxon?: number;

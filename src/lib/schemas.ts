@@ -324,7 +324,6 @@ export const CHAIN_SCHEMAS: Record<ChainType, ChainSchema> = {
         attributes: [],
         collection: {
           name: "",
-          family: "",
         },
       },
       requiredFields: ["schema", "nftType", "name", "description", "image"],
@@ -486,7 +485,6 @@ export function createDefaultMetadata(
         attributes: [],
         collection: {
           name: collectionName,
-          family: collectionName,
         },
       };
 

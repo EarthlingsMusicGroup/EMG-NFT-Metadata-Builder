@@ -232,32 +232,6 @@ export const MetadataOptionalFields = memo(
                 placeholder="Collection name"
               />
             </div>
-
-            <div className="space-y-2">
-              <Label htmlFor="collection.family">Collection Family</Label>
-              <Input
-                id="collection.family"
-                value={(metadata as any).collection?.family || ""}
-                onChange={(e) =>
-                  onFieldChange("collection.family", e.target.value)
-                }
-                placeholder="Optional family"
-              />
-            </div>
-
-            <div className="space-y-2">
-              <Label htmlFor="collection.description">
-                Collection Description
-              </Label>
-              <Input
-                id="collection.description"
-                value={(metadata as any).collection?.description || ""}
-                onChange={(e) =>
-                  onFieldChange("collection.description", e.target.value)
-                }
-                placeholder="Optional description"
-              />
-            </div>
           </>
         )}
       </div>

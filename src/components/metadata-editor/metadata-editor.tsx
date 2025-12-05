@@ -313,8 +313,6 @@ export function MetadataEditor({
         "audio",
         "file",
         "collection.name",
-        "collection.family",
-        "collection.description",
       ];
     }
 
