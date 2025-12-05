@@ -16,6 +16,7 @@ export type ChainType =
 export interface MetadataAttribute {
   trait_type: string;
   value: string | number;
+  description?: string;
   display_type?: "number" | "boost_number" | "boost_percentage" | "date";
   max_value?: number;
 }
@@ -66,6 +67,8 @@ export interface XRPMetadata extends BaseMetadata {
   nftType?: string;
   media_type?: string;
   file?: string;
+  video?: string;
+  audio?: string;
   issuer?: string;
   network?:
     | "mainnet"
@@ -79,6 +82,7 @@ export interface XRPMetadata extends BaseMetadata {
   collection?: {
     name: string;
     family?: string;
+    description?: string;
   };
   additional_metadata?: Record<string, string | number | boolean>;
   token_taxon?: number;

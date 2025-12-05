@@ -30,6 +30,11 @@ export const VALIDATION_RULES = {
     }
   },
 
+  uri: (value: string): boolean => {
+    if (typeof value !== "string") return false;
+    return /^(ipfs|ar|https?):\/\//i.test(value);
+  },
+
   hexColor: (value: string): boolean => {
     return /^[0-9A-Fa-f]{6}$/.test(value);
   },
@@ -81,7 +86,7 @@ export const VALIDATION_RULES = {
   },
 
   nftType: (value: string): boolean => {
-    return /^[a-z]+\.[v0-9]+$/.test(value);
+    return /^[a-zA-Z]+\.v[0-9]+$/.test(value);
   },
 };
 
@@ -245,26 +250,22 @@ export function validateSolanaMetadata(metadata: any): ValidationError[] {
 export function validateXRPMetadata(metadata: any): ValidationError[] {
   const errors: ValidationError[] = [];
 
-  if (!VALIDATION_RULES.nonEmptyString(metadata.name)) {
-    errors.push({ field: "name", message: "Name is required", entryId: "" });
-  }
+  const requireField = (field: string, message: string) => {
+    if (!VALIDATION_RULES.nonEmptyString(metadata[field])) {
+      errors.push({ field, message, entryId: "" });
+    }
+  };
 
-  if (!VALIDATION_RULES.nonEmptyString(metadata.description)) {
+  requireField("schema", "Schema URI is required");
+  requireField("nftType", "nftType is required");
+  requireField("name", "Name is required");
+  requireField("description", "Description is required");
+  requireField("image", "Image is required");
+
+  if (metadata.schema && !VALIDATION_RULES.uri(metadata.schema)) {
     errors.push({
-      field: "description",
-      message: "Description is required",
-      entryId: "",
-    });
-  }
-
-  if (!VALIDATION_RULES.nonEmptyString(metadata.image)) {
-    errors.push({ field: "image", message: "Image is required", entryId: "" });
-  }
-
-  if (metadata.issuer && !VALIDATION_RULES.xrplAddress(metadata.issuer)) {
-    errors.push({
-      field: "issuer",
-      message: "Invalid XRPL address format",
+      field: "schema",
+      message: "Schema must be a valid URI (ipfs|ar|http|https)",
       entryId: "",
     });
   }
@@ -273,6 +274,39 @@ export function validateXRPMetadata(metadata: any): ValidationError[] {
     errors.push({
       field: "nftType",
       message: "Invalid NFT type format (e.g., art.v0)",
+      entryId: "",
+    });
+  } else if (metadata.nftType && metadata.nftType !== "art.v0") {
+    errors.push({
+      field: "nftType",
+      message: "For XRPL schema support, nftType must be art.v0",
+      entryId: "",
+    });
+  }
+
+  const uriFields = ["image", "video", "audio", "file"]; // xrp.cafe doesnt support animation
+  uriFields.forEach((field) => {
+    if (metadata[field] && !VALIDATION_RULES.uri(metadata[field])) {
+      errors.push({
+        field,
+        message: `${field} must be a valid URI (ipfs|ar|http|https)`,
+        entryId: "",
+      });
+    }
+  });
+
+  if (metadata.external_url && !VALIDATION_RULES.url(metadata.external_url)) {
+    errors.push({
+      field: "external_url",
+      message: "Invalid URL format",
+      entryId: "",
+    });
+  }
+
+  if (metadata.issuer && !VALIDATION_RULES.xrplAddress(metadata.issuer)) {
+    errors.push({
+      field: "issuer",
+      message: "Invalid XRPL address format",
       entryId: "",
     });
   }
@@ -285,11 +319,36 @@ export function validateXRPMetadata(metadata: any): ValidationError[] {
     });
   }
 
-  if (metadata.schema && !VALIDATION_RULES.url(metadata.schema)) {
-    errors.push({
-      field: "schema",
-      message: "Invalid schema URL format",
-      entryId: "",
+  if (metadata.collection) {
+    if (!VALIDATION_RULES.nonEmptyString(metadata.collection.name)) {
+      errors.push({
+        field: "collection.name",
+        message: "Collection name is required when collection is present",
+        entryId: "",
+      });
+    }
+  }
+
+  if (metadata.attributes && Array.isArray(metadata.attributes)) {
+    metadata.attributes.forEach((attr: any, index: number) => {
+      if (!VALIDATION_RULES.nonEmptyString(attr.trait_type)) {
+        errors.push({
+          field: `attributes[${index}].trait_type`,
+          message: "Trait type is required",
+          entryId: "",
+        });
+      }
+      if (
+        attr.value === undefined ||
+        attr.value === null ||
+        attr.value === ""
+      ) {
+        errors.push({
+          field: `attributes[${index}].value`,
+          message: "Value is required",
+          entryId: "",
+        });
+      }
     });
   }
 

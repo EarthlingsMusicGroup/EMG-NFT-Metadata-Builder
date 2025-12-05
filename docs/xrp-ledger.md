@@ -59,44 +59,108 @@ XRP Ledger uses the XLS-20 and XLS-24d standards for NFTs. XLS-20 introduces nat
 }
 ```
 
-### External Metadata JSON Schema
+### XLS-24d art.v0 Metadata Schema
+
+The XRPL community-defined art.v0 type (XLS-24d) uses a JSON Schema with the following required fields:
+
+- `schema` (URI to the schema definition, e.g., `ipfs://QmNpi8rcXEkohca8iXu7zysKKSJYqCvBJn3xJwga8jXqWU`)
+- `nftType` (must match `^[a-zA-Z]+.v[0-9]+$`, e.g., `art.v0`)
+- `name`
+- `description`
+- `image`
+
+Optional, but schema-supported fields:
+
+- `animation`, `video`, `audio`, `file` (URIs) — note: xrp.cafe does not currently support `animation`; prefer `video` for motion on that marketplace
+- `collection` with `name` (required) and optional `family`
+- `attributes` array of `{ trait_type, value, description? }` where `value` is string | integer | number
+
+Full JSON Schema:
 
 ```json
 {
-  "name": "NFT Name",
-  "description": "NFT Description",
-  "image": "https://example.com/image.png",
-  "animation_url": "https://example.com/animation.mp4",
-  "external_url": "https://example.com/nft/1",
-  "attributes": [
-    {
-      "trait_type": "Color",
-      "value": "Blue"
-    },
-    {
-      "trait_type": "Rarity",
-      "value": "Legendary"
-    }
-  ],
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "required": ["schema", "nftType", "name", "description", "image"],
   "properties": {
-    "category": "image",
-    "files": [
-      {
-        "uri": "https://example.com/image.png",
-        "type": "image/png"
+    "schema": { "type": "string", "format": "uri" },
+    "nftType": { "type": "string", "pattern": "(^[a-zA-Z]+.v[0-9]+$)" },
+    "name": { "type": "string" },
+    "description": { "type": "string" },
+    "image": { "type": "string", "format": "uri" },
+    "animation": { "type": "string", "format": "uri" },
+    "video": { "type": "string", "format": "uri" },
+    "audio": { "type": "string", "format": "uri" },
+    "file": { "type": "string", "format": "uri" },
+    "collection": {
+      "type": "object",
+      "properties": {
+        "name": { "type": "string" },
+        "family": { "type": "string" }
+      },
+      "required": ["name"]
+    },
+    "attributes": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "trait_type": { "type": "string" },
+          "value": { "type": ["string", "integer", "number"] },
+          "description": { "type": "string" }
+        },
+        "required": ["trait_type", "value"]
       }
-    ]
-  },
-  "collection": {
-    "name": "Collection Name",
-    "family": "Collection Family"
-  },
-  "creator": {
-    "name": "Creator Name",
-    "address": "rN7n7otQDd6FczFgLdSqtcsAUxDkw6fzRH"
+    }
   }
 }
 ```
+
+Minimal art.v0 metadata example:
+
+```json
+{
+  "schema": "ipfs://QmNpi8rcXEkohca8iXu7zysKKSJYqCvBJn3xJwga8jXqWU",
+  "nftType": "art.v0",
+  "name": "ART NFT #0",
+  "description": "An ART NFT with minimum properties!",
+  "image": "ipfs://QmcCST9U9qwJwuBxZyTJ6ePvdJHrub7yPkAcNeCKZQ3trn"
+}
+```
+
+Full art.v0 example with all schema-supported fields:
+
+```json
+{
+  "schema": "ipfs://QmNpi8rcXEkohca8iXu7zysKKSJYqCvBJn3xJwga8jXqWU",
+  "nftType": "art.v0",
+  "name": "ART NFT #0",
+  "description": "An Art NFT with all properties supported by the art.v0 schema.",
+  "image": "ipfs://QmcCST9U9qwJwuBxZyTJ6ePvdJHrub7yPkAcNeCKZQ3trn",
+  "animation": "ipfs://QmfQGVwoxpqnAvDxFxW7bPsesivFas7FFjBcW9tVU5ymZQ",
+  "video": "ipfs://QmWrLXyMFCB5XajAg9xRDkM9YtCvgMN7NqjmsgkoaV4k5k",
+  "audio": "ipfs://QmQxMmXRrFZ8oMNtQjhaSnqosNTQFFzacT8F6kCoA4iSUd",
+  "file": "ipfs://QmXVgDaHkXbyhnim8P9KmKG2khqLwnfT3fbZJRPBeVJDWY",
+  "collection": {
+    "name": "XLS-24d Examples",
+    "family": "X-Tokenize Example NFTS"
+  },
+  "attributes": [
+    {
+      "trait_type": "Background",
+      "description": "A dark background.",
+      "value": "Black"
+    },
+    {
+      "trait_type": "Text",
+      "description": "A comforting message.",
+      "value": "Hello XLS-24d"
+    }
+  ]
+}
+```
+
+Additional project-specific fields are allowed by JSON Schema, but applications may ignore them; keep required art.v0 fields intact for compatibility.
 
 ## XLS-20 Fields
 
@@ -153,43 +217,62 @@ async function mintNFT() {
 ### Metadata Creation
 
 ```javascript
-function createXRPMetadata(nftData) {
+const ART_V0_SCHEMA =
+  'ipfs://QmNpi8rcXEkohca8iXu7zysKKSJYqCvBJn3xJwga8jXqWU';
+
+function createArtV0Metadata(nftData) {
   const metadata = {
+    schema: nftData.schema || ART_V0_SCHEMA,
+    nftType: 'art.v0',
     name: nftData.name,
     description: nftData.description,
-    image: nftData.image,
-    animation_url: nftData.animation_url,
-    external_url: nftData.external_url,
-    attributes: nftData.attributes || [],
-    properties: nftData.properties || {},
-    collection: nftData.collection || null,
-    creator: {
-      name: nftData.creator?.name || 'Unknown',
-      address: nftData.creator?.address || ''
-    }
+    image: nftData.image
   };
-  
+
+  if (nftData.animation) metadata.animation = nftData.animation;
+  if (nftData.video) metadata.video = nftData.video;
+  if (nftData.audio) metadata.audio = nftData.audio;
+  if (nftData.file) metadata.file = nftData.file;
+
+  if (nftData.collection?.name) {
+    metadata.collection = {
+      name: nftData.collection.name,
+      ...(nftData.collection.family
+        ? { family: nftData.collection.family }
+        : {})
+    };
+  }
+
+  if (Array.isArray(nftData.attributes)) {
+    metadata.attributes = nftData.attributes.map((attr) => ({
+      trait_type: attr.trait_type,
+      value: attr.value,
+      ...(attr.description ? { description: attr.description } : {})
+    }));
+  }
+
   return metadata;
 }
 
 // Example usage
 const nftData = {
-  name: 'My XRP NFT',
-  description: 'A beautiful NFT on XRP Ledger',
+  name: 'My XRPL NFT',
+  description: 'A beautiful NFT on XRPL following art.v0',
   image: 'https://example.com/image.png',
+  animation: 'https://example.com/animation.mp4',
   attributes: [
     {
       trait_type: 'Color',
       value: 'Blue'
     }
   ],
-  creator: {
-    name: 'Artist Name',
-    address: 'rN7n7otQDd6FczFgLdSqtcsAUxDkw6fzRH'
+  collection: {
+    name: 'Example Collection',
+    family: 'XRPL Art'
   }
 };
 
-const metadata = createXRPMetadata(nftData);
+const metadata = createArtV0Metadata(nftData);
 ```
 
 ### NFT Transfer
@@ -264,23 +347,29 @@ async function transferNFT(nftokenID, destination) {
 
 ```json
 {
+  "schema": "ipfs://QmNpi8rcXEkohca8iXu7zysKKSJYqCvBJn3xJwga8jXqWU",
+  "nftType": "art.v0",
   "name": "NFT Name",
   "description": "NFT Description",
   "image": "https://example.com/image.png",
+  "collection": {
+    "name": "Collection Name",
+    "family": "Collection Family"
+  },
   "attributes": [
     {
       "trait_type": "Rarity",
       "value": "Legendary"
     }
   ],
-  "collection": {
-    "name": "Collection Name",
-    "family": "Collection Family"
-  },
   "creator": {
     "name": "Creator Name",
     "address": "rN7n7otQDd6FczFgLdSqtcsAUxDkw6fzRH"
-  }
+  },
+  "marketplace": {
+    "external_url": "https://example.com/nft/1"
+  },
+  "video": "https://example.com/preview.mp4"
 }
 ```
 
@@ -288,6 +377,8 @@ async function transferNFT(nftokenID, destination) {
 
 ```json
 {
+  "schema": "ipfs://QmNpi8rcXEkohca8iXu7zysKKSJYqCvBJn3xJwga8jXqWU",
+  "nftType": "art.v0",
   "name": "Collection Item",
   "description": "Item from My Collection",
   "image": "https://example.com/image.png",
@@ -313,31 +404,51 @@ async function transferNFT(nftokenID, destination) {
 ### Metadata Validation
 
 ```javascript
-function validateXRPMetadata(metadata) {
-  // Required fields
-  const required = ['name', 'description', 'image'];
-  const missing = required.filter(field => !metadata[field]);
-  
+function validateArtV0Metadata(metadata) {
+  const required = ['schema', 'nftType', 'name', 'description', 'image'];
+  const missing = required.filter((field) => !metadata[field]);
+
   if (missing.length > 0) {
     throw new Error(`Missing required fields: ${missing.join(', ')}`);
   }
-  
-  // Validate attributes
+
+  if (!/^[a-zA-Z]+\.v[0-9]+$/.test(metadata.nftType)) {
+    throw new Error('Invalid nftType format; expected something like art.v0');
+  }
+
+  if (metadata.nftType !== 'art.v0') {
+    throw new Error('nftType must be art.v0 for this schema');
+  }
+
+  const uriLike = /^(ipfs|ar|https?):\/\//i;
+  ['schema', 'image', 'animation', 'video', 'audio', 'file'].forEach(
+    (field) => {
+      if (metadata[field] && !uriLike.test(metadata[field])) {
+        throw new Error(`Field ${field} must be a valid URI (ipfs|ar|http)`);
+      }
+    }
+  );
+
+  if (metadata.collection) {
+    if (!metadata.collection.name) {
+      throw new Error('collection.name is required when collection is present');
+    }
+  }
+
   if (metadata.attributes) {
-    metadata.attributes.forEach(attr => {
-      if (!attr.trait_type || !attr.value) {
+    metadata.attributes.forEach((attr) => {
+      if (!attr.trait_type || attr.value === undefined || attr.value === null) {
         throw new Error('Invalid attribute structure');
+      }
+      if (
+        !['string', 'number'].includes(typeof attr.value) &&
+        !Number.isInteger(attr.value)
+      ) {
+        throw new Error('Attribute value must be string, integer, or number');
       }
     });
   }
-  
-  // Validate creator address
-  if (metadata.creator?.address) {
-    if (!metadata.creator.address.startsWith('r')) {
-      throw new Error('Invalid XRP Ledger address format');
-    }
-  }
-  
+
   return true;
 }
 ```

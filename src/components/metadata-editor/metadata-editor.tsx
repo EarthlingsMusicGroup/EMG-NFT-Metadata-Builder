@@ -16,10 +16,14 @@ import { Alert, AlertDescription } from "@/components/ui/alert";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { getFileCategory, validateFile } from "@/lib/file-validation";
+import { storeMediaFile } from "@/lib/indexeddb";
 import { useProjectStore } from "@/lib/project-store";
 import { getSchemaForChain } from "@/lib/schemas";
+import type { MediaFile } from "@/lib/types";
 import { AlertCircle, RefreshCw } from "lucide-react";
 import { useCallback, useEffect, useMemo, useState } from "react";
+import { toast } from "sonner";
 
 interface MetadataEditorProps {
   selectedIndex?: number;
@@ -60,17 +64,35 @@ export function MetadataEditor({
     [project, metadataEntries, updateProject],
   );
 
+  const applyFieldUpdate = useCallback(
+    (metadata: any, field: string, value: any) => {
+      if (field.startsWith("collection.")) {
+        const [, key] = field.split(".");
+        return {
+          ...metadata,
+          collection: {
+            ...(metadata.collection || {}),
+            [key]: value,
+          },
+        };
+      }
+
+      return { ...metadata, [field]: value };
+    },
+    [],
+  );
+
   const batchUpdateMetadata = useCallback(
     (field: string, value: string) => {
       if (project) {
         const updatedEntries = metadataEntries.map((entry) => ({
           ...entry,
-          metadata: { ...entry.metadata, [field]: value },
+          metadata: applyFieldUpdate(entry.metadata, field, value),
         }));
         updateProject(project.id, { metadataEntries: updatedEntries });
       }
     },
-    [project, metadataEntries, updateProject],
+    [applyFieldUpdate, project, metadataEntries, updateProject],
   );
 
   const regenerateMetadata = useCallback(() => {
@@ -103,6 +125,7 @@ export function MetadataEditor({
     () => getSchemaForChain(projectConfig.chain),
     [projectConfig.chain],
   );
+
   const currentEntry = useMemo(
     () => metadataEntries[currentSelectedIndex],
     [metadataEntries, currentSelectedIndex],
@@ -112,6 +135,124 @@ export function MetadataEditor({
     [images, currentEntry],
   );
 
+  const applyValueToCurrent = useCallback(
+    (field: string, value: string) => {
+      if (!currentEntry) return;
+      const updated = applyFieldUpdate(currentEntry.metadata, field, value);
+      updateMetadata(currentSelectedIndex, updated);
+    },
+    [applyFieldUpdate, currentEntry, currentSelectedIndex, updateMetadata],
+  );
+
+  const handleSelectMediaForCurrent = useCallback(
+    (field: string, mediaId: string) => {
+      const media = images.find((m) => m.id === mediaId);
+      if (!media) {
+        toast.error("File not found");
+        return;
+      }
+      applyValueToCurrent(field, media.name);
+      toast.success(`Attached ${media.name} to current item`);
+    },
+    [applyValueToCurrent, images],
+  );
+
+  const handleBatchSelectMedia = useCallback(
+    (field: string, mediaId: string) => {
+      const media = images.find((m) => m.id === mediaId);
+      if (!media) {
+        toast.error("File not found");
+        return;
+      }
+      batchUpdateMetadata(field, media.name);
+      toast.success(`Applied ${media.name} to all items`);
+    },
+    [batchUpdateMetadata, images],
+  );
+
+  const [isInlineUploading, setIsInlineUploading] = useState(false);
+
+  const handleMediaUpload = useCallback(
+    async (field: string, file: File, applyToAll: boolean = false) => {
+      if (!project) return;
+
+      const validation = validateFile(file);
+      if (!validation.valid) {
+        toast.error("Upload failed", { description: validation.error });
+        return;
+      }
+
+      const category = getFileCategory(file.type);
+      if (!category) {
+        toast.error("Unsupported file type");
+        return;
+      }
+
+      setIsInlineUploading(true);
+      try {
+        const id = `media-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`;
+        await storeMediaFile(id, file, category);
+
+        const mediaFile: MediaFile = {
+          id,
+          name: file.name,
+          index: images.length + 1,
+          size: file.size,
+          type: file.type as MediaFile["type"],
+          category,
+          lastModified: file.lastModified,
+        };
+
+        const updatedImages = [...images, mediaFile];
+        const value = file.name;
+
+        if (applyToAll) {
+          const updatedEntries = metadataEntries.map((entry) => ({
+            ...entry,
+            metadata: applyFieldUpdate(entry.metadata, field, value),
+          }));
+          updateProject(project.id, {
+            images: updatedImages,
+            metadataEntries: updatedEntries,
+          });
+          toast.success(`Uploaded and applied ${value} to all items`);
+        } else if (currentEntry) {
+          const updatedEntries = [...metadataEntries];
+          const updatedMetadata = applyFieldUpdate(
+            currentEntry.metadata,
+            field,
+            value,
+          );
+          updatedEntries[currentSelectedIndex] = {
+            ...currentEntry,
+            metadata: updatedMetadata,
+          };
+          updateProject(project.id, {
+            images: updatedImages,
+            metadataEntries: updatedEntries,
+          });
+          toast.success(`Uploaded and attached ${value}`);
+        } else {
+          updateProject(project.id, { images: updatedImages });
+        }
+      } catch (error) {
+        toast.error("Upload failed", {
+          description: "Could not process the selected file.",
+        });
+      } finally {
+        setIsInlineUploading(false);
+      }
+    },
+    [
+      applyFieldUpdate,
+      currentEntry,
+      currentSelectedIndex,
+      images,
+      metadataEntries,
+      project,
+      updateProject,
+    ],
+  );
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       if (
@@ -160,6 +301,44 @@ export function MetadataEditor({
     },
     [batchUpdateMetadata],
   );
+
+  const availableBatchFields = useMemo(() => {
+    const base = ["name", "description", "image", "external_url"];
+    if (projectConfig.chain === "xrp") {
+      return [
+        ...base,
+        "schema",
+        "nftType",
+        "video",
+        "audio",
+        "file",
+        "collection.name",
+        "collection.family",
+        "collection.description",
+      ];
+    }
+
+    if (
+      projectConfig.chain === "ethereum" ||
+      projectConfig.chain === "polygon" ||
+      projectConfig.chain === "base" ||
+      projectConfig.chain === "arbitrum" ||
+      projectConfig.chain === "optimism" ||
+      projectConfig.chain === "avalanche" ||
+      projectConfig.chain === "bsc"
+    ) {
+      return [
+        ...base,
+        "background_color",
+        "animation_url",
+        "youtube_url",
+        "video_url",
+        "audio_url",
+      ];
+    }
+
+    return base;
+  }, [projectConfig.chain]);
 
   if (!currentEntry || !currentImage) {
     return (
@@ -227,7 +406,13 @@ export function MetadataEditor({
                   <MetadataOptionalFields
                     metadata={currentEntry.metadata}
                     chain={projectConfig.chain}
+                    mediaFiles={images}
                     onFieldChange={handleFieldChange}
+                    onSelectMedia={handleSelectMediaForCurrent}
+                    onUploadMedia={(field, file) =>
+                      handleMediaUpload(field, file, false)
+                    }
+                    isUploading={isInlineUploading}
                   />
                 </AccordionContent>
               </AccordionItem>
@@ -294,6 +479,11 @@ export function MetadataEditor({
         onOpenChange={setShowBatchDialog}
         itemCount={metadataEntries.length}
         onApply={handleBatchUpdate}
+        availableFields={availableBatchFields}
+        mediaFiles={images}
+        onApplyMedia={handleBatchSelectMedia}
+        onUploadAndApply={(field, file) => handleMediaUpload(field, file, true)}
+        isUploading={isInlineUploading}
       />
     </Card>
   );

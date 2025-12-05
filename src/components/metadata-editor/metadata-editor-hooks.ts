@@ -19,14 +19,35 @@ export function useMetadataEditor({
   batchUpdateMetadata,
   regenerateMetadata,
 }: UseMetadataEditorProps) {
+  const applyFieldUpdate = useCallback(
+    (metadata: any, field: string, value: any) => {
+      if (field.startsWith("collection.")) {
+        const [, key] = field.split(".");
+        return {
+          ...metadata,
+          collection: {
+            ...(metadata.collection || {}),
+            [key]: value,
+          },
+        };
+      }
+      return { ...metadata, [field]: value };
+    },
+    [],
+  );
+
   const handleFieldChange = useCallback(
     (field: string, value: any) => {
       if (!currentEntry) return;
 
-      const updatedMetadata = { ...currentEntry.metadata, [field]: value };
+      const updatedMetadata = applyFieldUpdate(
+        currentEntry.metadata,
+        field,
+        value,
+      );
       updateMetadata(currentSelectedIndex, updatedMetadata);
     },
-    [currentEntry, currentSelectedIndex, updateMetadata],
+    [applyFieldUpdate, currentEntry, currentSelectedIndex, updateMetadata],
   );
 
   const handleAddAttribute = useCallback(() => {
