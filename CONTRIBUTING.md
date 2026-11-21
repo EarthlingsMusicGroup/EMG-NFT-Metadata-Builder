@@ -1,4 +1,4 @@
-# Contributing to EMG NFT Metadata Builder
+# Contributing to SpaceBar Metadata Builder
 
 Thank you for your interest in contributing! This document provides guidelines and instructions for contributing to the project.
 

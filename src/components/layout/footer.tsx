@@ -15,6 +15,8 @@ interface LinkSection {
 
 const GITHUB_REPO_URL =
   "https://github.com/EarthlingsMusicGroup/EMG-NFT-Metadata-Builder";
+const SPACEBAR_URL = "https://www.spacebar.music";
+const AUTHOR_URL = "https://github.com/BankkRoll";
 
 const linkSections: LinkSection[] = [
   {
@@ -140,7 +142,11 @@ function FooterSection({ title, links }: LinkSection) {
 
 export function Footer() {
   return (
-    <footer className="border-t border-border bg-card mt-16">
+    <footer className="relative mt-16 border-t border-border bg-card">
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-nebula to-transparent"
+      />
       <div className="container mx-auto px-4 py-8">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
           {linkSections.map((section) => (
@@ -153,10 +159,30 @@ export function Footer() {
             <div>
               <h3 className="font-semibold mb-4 text-foreground">About</h3>
               <p className="text-sm text-muted-foreground leading-relaxed">
-                A modern, production-ready NFT metadata builder supporting 13+
-                blockchains with comprehensive standards coverage, IndexedDB
-                storage, and a clean, intuitive interface for creating
-                production-ready NFT collections.
+                SpaceBar Metadata Builder is a client-side companion to{" "}
+                <a
+                  href={SPACEBAR_URL}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="font-medium text-neon-cyan underline decoration-neon-cyan/40 underline-offset-2 hover:decoration-neon-cyan focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring rounded-sm"
+                >
+                  The Space Bar
+                </a>
+                . It supports 13+ blockchains, keeps every project in IndexedDB
+                on this device, and never sends your files to a SpaceBar
+                server.
+              </p>
+              <p className="mt-3 text-xs leading-relaxed text-muted-foreground">
+                Originally the EMG NFT Metadata Builder by{" "}
+                <a
+                  href={AUTHOR_URL}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="underline underline-offset-2 hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring rounded-sm"
+                >
+                  Bankk
+                </a>
+                . MIT License.
               </p>
             </div>
             <div>
@@ -180,8 +206,17 @@ export function Footer() {
         <div className="border-t border-border mt-8 pt-8">
           <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
             <p className="text-sm text-muted-foreground text-center sm:text-left">
-              Built with Next.js, TypeScript, Tailwind CSS, and IndexedDB •
-              Supporting 13+ blockchains • 2025 NFT Standards
+              <a
+                href={SPACEBAR_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="font-medium text-foreground hover:text-neon-cyan focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring rounded-sm"
+              >
+                spacebar.music
+              </a>
+              {" · "}
+              Built with Next.js, TypeScript, Tailwind CSS, and IndexedDB ·
+              13+ blockchains
             </p>
             <div className="flex items-center gap-4">
               <a

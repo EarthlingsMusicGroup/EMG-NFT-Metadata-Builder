@@ -140,7 +140,7 @@ export default function ProjectPage() {
   };
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen">
       <ProjectHeader
         project={project}
         isSaving={isSaving}

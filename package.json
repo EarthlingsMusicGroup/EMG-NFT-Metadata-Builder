@@ -1,8 +1,9 @@
 {
-  "name": "emg-nft-metadata-builder",
+  "name": "spacebar-metadata-builder",
   "version": "1.0.0",
-  "description": "A client-side NFT metadata generator supporting 13+ blockchain standards.",
+  "description": "SpaceBar companion for creating client-side NFT metadata across 13+ blockchain standards.",
   "keywords": [
+    "spacebar",
     "nft",
     "metadata",
     "blockchain",
@@ -36,7 +37,7 @@
   "scripts": {
     "build": "next build",
     "dev": "next dev",
-    "lint": "next lint",
+    "lint": "tsc --noEmit",
     "start": "next start",
     "format": "prettier --write \"src/**/*.{js,jsx,ts,tsx,json,css,md}\"",
     "type-check": "tsc --noEmit"

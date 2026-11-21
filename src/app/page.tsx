@@ -68,7 +68,7 @@ export default function HomePage() {
   };
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen">
       <main className="min-h-[60svh] container mx-auto px-4 py-8">
         {projectSummaries.length === 0 ? (
           <EmptyView onImportProject={handleImportProject} />
