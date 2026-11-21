@@ -8,7 +8,7 @@ export function NotFoundView() {
   const router = useRouter();
 
   return (
-    <div className="min-h-screen bg-background flex items-center justify-center">
+    <div className="flex min-h-screen items-center justify-center">
       <div className="text-center">
         <h1 className="text-2xl font-semibold mb-2">Project not found</h1>
         <p className="text-muted-foreground mb-4">

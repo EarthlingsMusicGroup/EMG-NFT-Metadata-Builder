@@ -1,38 +1,82 @@
 import "./globals.css";
 
-import { Geist, Geist_Mono } from "next/font/google";
-
-import { Analytics } from "@vercel/analytics/next";
 import { Footer } from "@/components/layout/footer";
 import Header from "@/components/layout/header";
 import { KeyboardShortcuts } from "@/components/keyboard-shortcuts";
-import type { Metadata } from "next";
-import type React from "react";
 import { ThemeProvider } from "@/components/layout/theme-provider";
 import { Toaster } from "@/components/ui/sonner";
+import { Analytics } from "@vercel/analytics/next";
+import type { Metadata, Viewport } from "next";
+import { Geist_Mono, Montserrat, Orbitron } from "next/font/google";
+import type React from "react";
 
-const geistSans = Geist({ subsets: ["latin"], variable: "--font-sans" });
+const montserrat = Montserrat({
+  subsets: ["latin"],
+  variable: "--font-sans",
+  weight: ["400", "500", "600", "700"],
+});
+
+const orbitron = Orbitron({
+  subsets: ["latin"],
+  variable: "--font-display",
+  weight: ["500", "600", "700", "800"],
+});
+
 const geistMono = Geist_Mono({ subsets: ["latin"], variable: "--font-mono" });
 
+const SITE_URL = "https://emgbuilder.spacebar.music";
+const APP_NAME =
+  "Earthlings Music Metadata Builder - Powered by SpaceBar.Music";
+const DESCRIPTION =
+  "Earthlings Music Metadata Builder, powered by SpaceBar.Music. Create production-ready NFT metadata for Ethereum, Solana, the XRP Ledger, and more. Client-side, no backend, no accounts.";
+
 export const metadata: Metadata = {
-  title: "NFT Metadata Builder - Production-Ready Metadata Generator",
-  description:
-    "Create production-ready NFT metadata for Ethereum, Solana, XRP, and more. 100% client-side, no backend required.",
+  metadataBase: new URL(SITE_URL),
+  title: {
+    default: APP_NAME,
+    template: `%s · ${APP_NAME}`,
+  },
+  description: DESCRIPTION,
+  applicationName: APP_NAME,
+  authors: [{ name: "Bankk", url: "https://github.com/BankkRoll" }],
+  creator: "Bankk",
   keywords: [
+    "Earthlings Music",
+    "SpaceBar",
+    "spacebar.music",
     "NFT",
     "metadata",
     "blockchain",
     "Ethereum",
     "Solana",
     "XRP",
+    "XRPL",
     "IPFS",
     "web3",
   ],
-  openGraph: {
-    title: "NFT Metadata Builder",
-    description: "Create production-ready NFT metadata for any blockchain",
-    type: "website",
+  alternates: {
+    canonical: SITE_URL,
   },
+  openGraph: {
+    title: APP_NAME,
+    description: DESCRIPTION,
+    type: "website",
+    url: SITE_URL,
+    siteName: "Earthlings Music Metadata Builder",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: APP_NAME,
+    description: DESCRIPTION,
+    site: "@spacebar_music",
+  },
+};
+
+export const viewport: Viewport = {
+  themeColor: "#1a1a1a",
+  width: "device-width",
+  initialScale: 1,
+  viewportFit: "cover",
 };
 
 export default function RootLayout({
@@ -41,19 +85,25 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" suppressHydrationWarning>
+    <html lang="en" className="dark" suppressHydrationWarning>
       <body
-        className={`${geistSans.variable} ${geistMono.variable} font-sans antialiased`}
+        className={`${montserrat.variable} ${orbitron.variable} ${geistMono.variable} font-sans antialiased`}
       >
         <ThemeProvider
           attribute="class"
-          defaultTheme="light"
-          enableSystem
+          defaultTheme="dark"
+          enableSystem={false}
           disableTransitionOnChange
         >
+          <a
+            href="#main-content"
+            className="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-[60] focus:rounded-md focus:bg-primary focus:px-3 focus:py-2 focus:text-primary-foreground"
+          >
+            Skip to content
+          </a>
           <KeyboardShortcuts />
           <Header />
-          {children}
+          <div id="main-content">{children}</div>
           <Footer />
           <Toaster />
           <Analytics />
