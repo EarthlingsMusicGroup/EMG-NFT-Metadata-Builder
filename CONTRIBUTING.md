@@ -1,4 +1,4 @@
-# Contributing to SpaceBar Metadata Builder
+# Contributing to Earthlings Music Metadata Builder
 
 Thank you for your interest in contributing! This document provides guidelines and instructions for contributing to the project.
 

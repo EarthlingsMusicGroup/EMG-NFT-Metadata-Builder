@@ -1,6 +1,7 @@
 import { ImageResponse } from "next/og";
 
-export const alt = "SpaceBar Metadata Builder — NFT metadata for The Space Bar";
+export const alt =
+  "Earthlings Music Metadata Builder - Powered by SpaceBar.Music";
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 
@@ -50,32 +51,33 @@ export default function OpenGraphImage() {
             fontWeight: 700,
           }}
         >
-          METADATA BUILDER
+          POWERED BY SPACEBAR.MUSIC
         </div>
-        <div style={{ display: "flex", flexDirection: "column", gap: 18 }}>
+        <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
           <div
             style={{
               display: "flex",
-              fontSize: 92,
+              fontSize: 64,
               fontWeight: 700,
-              letterSpacing: 12,
+              letterSpacing: 4,
               color: "#5CFFFF",
             }}
           >
-            SPACEBAR
+            EARTHLINGS MUSIC
           </div>
           <div
             style={{
               display: "flex",
-              fontSize: 32,
+              fontSize: 36,
               color: "#F4F1FF",
+              letterSpacing: 2,
             }}
           >
-            NFT metadata for The Space Bar
+            Metadata Builder
           </div>
         </div>
         <div style={{ display: "flex", fontSize: 24, color: "#D5D3E4" }}>
-          spacebar.music
+          Earthlings Music Metadata Builder - Powered by SpaceBar.Music
         </div>
       </div>
     ),

@@ -1,16 +1,16 @@
-# SpaceBar Metadata Builder
+# Earthlings Music Metadata Builder - Powered by SpaceBar.Music
 
 **Privacy First**: No accounts, no servers, no data collection. Your projects are stored locally and never leave your device.
 
-A standalone companion to [The Space Bar](https://www.spacebar.music), intended to live at `builder.spacebar.music`. The main site stays a separate app. This builder links back to it and does not share a backend or API keys.
+A standalone companion powered by [SpaceBar.Music](https://www.spacebar.music), intended to live at [emgbuilder.spacebar.music](https://emgbuilder.spacebar.music). The main site stays a separate app. This builder links back to it and does not share a backend or API keys.
 
 ## Overview
 
-SpaceBar Metadata Builder is a web application for creating, editing, and exporting NFT metadata across multiple blockchain networks. It provides a complete workflow from project creation to metadata export, with support for IPFS uploads and multiple export formats.
+Earthlings Music Metadata Builder is a web application for creating, editing, and exporting NFT metadata across multiple blockchain networks. It provides a complete workflow from project creation to metadata export, with support for IPFS uploads and multiple export formats.
 
 The application is fully client-side with no backend required. All data is stored locally in the browser using IndexedDB, ensuring privacy and offline capability. Keys for Pinata and Web3.Storage stay in the browser and are entered by the person using the app.
 
-The visual identity follows The Space Bar: dark nebula background, Orbitron headings, Montserrat body text, and neon cyan / green accents. The live site does not publish a standalone logo file (its favicon is a photograph of the bar), so this app uses an Orbitron text wordmark plus a generated “SB” favicon.
+The visual identity follows The Space Bar: dark nebula background, Orbitron headings, Montserrat body text, and neon cyan / green accents. The live site does not publish a standalone logo file (its favicon is a photograph of the bar), so this app uses an Orbitron text wordmark plus a generated “EM” favicon.
 
 Originally the EMG NFT Metadata Builder by [Bankk](https://github.com/BankkRoll). The MIT license is unchanged.
 

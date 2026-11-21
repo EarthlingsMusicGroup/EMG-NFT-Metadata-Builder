@@ -1,7 +1,7 @@
 {
-  "name": "spacebar-metadata-builder",
+  "name": "earthlings-music-metadata-builder",
   "version": "1.0.0",
-  "description": "SpaceBar companion for creating client-side NFT metadata across 13+ blockchain standards.",
+  "description": "Earthlings Music Metadata Builder - Powered by SpaceBar.Music. A client-side NFT metadata generator across 13+ blockchain standards.",
   "keywords": [
     "spacebar",
     "nft",

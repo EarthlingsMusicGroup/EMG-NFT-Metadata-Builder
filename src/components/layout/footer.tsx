@@ -159,18 +159,17 @@ export function Footer() {
             <div>
               <h3 className="font-semibold mb-4 text-foreground">About</h3>
               <p className="text-sm text-muted-foreground leading-relaxed">
-                SpaceBar Metadata Builder is a client-side companion to{" "}
+                Earthlings Music Metadata Builder is powered by{" "}
                 <a
                   href={SPACEBAR_URL}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="font-medium text-neon-cyan underline decoration-neon-cyan/40 underline-offset-2 hover:decoration-neon-cyan focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring rounded-sm"
                 >
-                  The Space Bar
+                  SpaceBar.Music
                 </a>
                 . It supports 13+ blockchains, keeps every project in IndexedDB
-                on this device, and never sends your files to a SpaceBar
-                server.
+                on this device, and never sends your files to a server.
               </p>
               <p className="mt-3 text-xs leading-relaxed text-muted-foreground">
                 Originally the EMG NFT Metadata Builder by{" "}
@@ -212,7 +211,7 @@ export function Footer() {
                 rel="noopener noreferrer"
                 className="font-medium text-foreground hover:text-neon-cyan focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring rounded-sm"
               >
-                spacebar.music
+                Powered by SpaceBar.Music
               </a>
               {" · "}
               Built with Next.js, TypeScript, Tailwind CSS, and IndexedDB ·

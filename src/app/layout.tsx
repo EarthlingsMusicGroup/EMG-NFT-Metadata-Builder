@@ -24,21 +24,24 @@ const orbitron = Orbitron({
 
 const geistMono = Geist_Mono({ subsets: ["latin"], variable: "--font-mono" });
 
-const SITE_URL = "https://builder.spacebar.music";
+const SITE_URL = "https://emgbuilder.spacebar.music";
+const APP_NAME =
+  "Earthlings Music Metadata Builder - Powered by SpaceBar.Music";
 const DESCRIPTION =
-  "Create production-ready NFT metadata for Ethereum, Solana, the XRP Ledger, and more. A client-side companion to The Space Bar at spacebar.music. No backend, no accounts.";
+  "Earthlings Music Metadata Builder, powered by SpaceBar.Music. Create production-ready NFT metadata for Ethereum, Solana, the XRP Ledger, and more. Client-side, no backend, no accounts.";
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
   title: {
-    default: "SpaceBar Metadata Builder",
-    template: "%s · SpaceBar",
+    default: APP_NAME,
+    template: `%s · ${APP_NAME}`,
   },
   description: DESCRIPTION,
-  applicationName: "SpaceBar Metadata Builder",
+  applicationName: APP_NAME,
   authors: [{ name: "Bankk", url: "https://github.com/BankkRoll" }],
   creator: "Bankk",
   keywords: [
+    "Earthlings Music",
     "SpaceBar",
     "spacebar.music",
     "NFT",
@@ -55,15 +58,15 @@ export const metadata: Metadata = {
     canonical: SITE_URL,
   },
   openGraph: {
-    title: "SpaceBar Metadata Builder",
+    title: APP_NAME,
     description: DESCRIPTION,
     type: "website",
     url: SITE_URL,
-    siteName: "SpaceBar",
+    siteName: "Earthlings Music Metadata Builder",
   },
   twitter: {
     card: "summary_large_image",
-    title: "SpaceBar Metadata Builder",
+    title: APP_NAME,
     description: DESCRIPTION,
     site: "@spacebar_music",
   },
