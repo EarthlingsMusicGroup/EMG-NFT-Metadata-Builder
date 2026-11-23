@@ -80,7 +80,7 @@ export function getChainInfo(chain: ChainType): ChainInfo {
         links: [
           {
             name: "Metaplex Docs",
-            url: "https://docs.metaplex.com/programs/token-metadata/",
+            url: "https://www.metaplex.com/docs/smart-contracts/token-metadata",
           },
           { name: "Magic Eden", url: "https://magiceden.io/" },
         ],
@@ -98,7 +98,7 @@ export function getChainInfo(chain: ChainType): ChainInfo {
         links: [
           {
             name: "XLS-20 Standard",
-            url: "https://xrpl.org/docs/tutorials/nft-tutorials/",
+            url: "https://xrpl.org/docs/concepts/tokens/nfts",
           },
           { name: "XRPL Docs", url: "https://xrpl.org/docs/" },
         ],

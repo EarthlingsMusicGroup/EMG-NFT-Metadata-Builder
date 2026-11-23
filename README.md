@@ -2,7 +2,7 @@
 
 **Privacy First**: No accounts, no servers, no data collection. Your projects are stored locally and never leave your device.
 
-A standalone companion powered by [SpaceBar.Music](https://www.spacebar.music), intended to live at [emgbuilder.spacebar.music](https://emgbuilder.spacebar.music). The main site stays a separate app. This builder links back to it and does not share a backend or API keys.
+A standalone companion powered by [SpaceBar.Music](https://www.spacebar.music). The canonical site is [earthlingsmusic.com](https://earthlingsmusic.com). [emgbuilder.spacebar.music](https://emgbuilder.spacebar.music) stays attached as an alias. The main SpaceBar site stays a separate app. This builder links back to it and does not share a backend or API keys.
 
 ## Overview
 
