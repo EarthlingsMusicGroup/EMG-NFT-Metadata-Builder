@@ -5,6 +5,10 @@ export const metadata: Metadata = {
   title: "Project",
   description:
     "Edit an Earthlings Music Metadata Builder project. Data stays in this browser.",
+  robots: {
+    index: false,
+    follow: false,
+  },
 };
 
 export default function ProjectLayout({ children }: { children: ReactNode }) {

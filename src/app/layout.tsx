@@ -5,6 +5,7 @@ import Header from "@/components/layout/header";
 import { KeyboardShortcuts } from "@/components/keyboard-shortcuts";
 import { ThemeProvider } from "@/components/layout/theme-provider";
 import { Toaster } from "@/components/ui/sonner";
+import { SITE_URL } from "@/lib/site";
 import { Analytics } from "@vercel/analytics/next";
 import type { Metadata, Viewport } from "next";
 import { Geist_Mono, Montserrat, Orbitron } from "next/font/google";
@@ -24,7 +25,6 @@ const orbitron = Orbitron({
 
 const geistMono = Geist_Mono({ subsets: ["latin"], variable: "--font-mono" });
 
-const SITE_URL = "https://emgbuilder.spacebar.music";
 const APP_NAME =
   "Earthlings Music Metadata Builder - Powered by SpaceBar.Music";
 const DESCRIPTION =
@@ -55,13 +55,13 @@ export const metadata: Metadata = {
     "web3",
   ],
   alternates: {
-    canonical: SITE_URL,
+    canonical: "/",
   },
   openGraph: {
     title: APP_NAME,
     description: DESCRIPTION,
     type: "website",
-    url: SITE_URL,
+    url: "/",
     siteName: "Earthlings Music Metadata Builder",
   },
   twitter: {

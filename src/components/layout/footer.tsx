@@ -39,11 +39,11 @@ const linkSections: LinkSection[] = [
     links: [
       {
         label: "Metaplex (Solana)",
-        href: "https://docs.metaplex.com/programs/token-metadata/",
+        href: "https://www.metaplex.com/docs/smart-contracts/token-metadata",
       },
       {
         label: "XLS-20/24d (XRP Ledger)",
-        href: "https://xrpl.org/docs/tutorials/nft-tutorials/",
+        href: "https://xrpl.org/docs/concepts/tokens/nfts",
       },
       {
         label: "TZIP-21 (Tezos)",
