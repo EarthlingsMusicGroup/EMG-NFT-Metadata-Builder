@@ -32,7 +32,13 @@ const WWW_HOST = "www.earthlingsmusic.com";
  *   are not fetched by the app. Vercel Analytics loads
  *   `/_vercel/insights/script.js` and beacons to `/_vercel/insights`
  *   (same origin). `va.vercel-scripts.com` is the dev debug script only.
+ *   `vitals.vercel-insights.com` is the documented analytics fallback.
  * - font-src: next/font self-hosts Montserrat, Orbitron, and Geist Mono.
+ * - Preview deployments on `*.vercel.app` also allow the Vercel Toolbar
+ *   (`https://vercel.live`, `https://vercel.com`, `https://assets.vercel.com`,
+ *   `wss://ws-us3.pusher.com`) per Vercel's toolbar CSP docs. Production
+ *   hosts do not. The toolbar is injected by the platform and is not part
+ *   of this app.
  *
  * HSTS is not set here. Vercel already sends
  * `strict-transport-security: max-age=63072000` on HTTPS responses. A
@@ -42,13 +48,42 @@ const WWW_HOST = "www.earthlingsmusic.com";
  * HTTP to HTTPS is also not configured here. Vercel's edge answers port 80
  * with a 308 before this app or `vercel.json` runs.
  */
-function contentSecurityPolicy() {
+function contentSecurityPolicy({ toolbar = false } = {}) {
   const isDev = process.env.NODE_ENV === "development";
   const scriptSrc = [
     "'self'",
     "'unsafe-inline'",
     isDev ? "'unsafe-eval'" : "",
     isDev ? "https://va.vercel-scripts.com" : "",
+    toolbar ? "https://vercel.live" : "",
+  ]
+    .filter(Boolean)
+    .join(" ");
+
+  const imgSrc = [
+    "'self'",
+    "blob:",
+    "data:",
+    "https://raw.githubusercontent.com",
+    "https://assets.coingecko.com",
+    toolbar ? "https://vercel.live https://vercel.com" : "",
+  ]
+    .filter(Boolean)
+    .join(" ");
+
+  const fontSrc = [
+    "'self'",
+    toolbar ? "https://vercel.live https://assets.vercel.com" : "",
+  ]
+    .filter(Boolean)
+    .join(" ");
+
+  const connectSrc = [
+    "'self'",
+    "https://api.pinata.cloud",
+    "https://api.web3.storage",
+    "https://vitals.vercel-insights.com",
+    toolbar ? "https://vercel.live wss://ws-us3.pusher.com" : "",
   ]
     .filter(Boolean)
     .join(" ");
@@ -56,16 +91,16 @@ function contentSecurityPolicy() {
   return [
     "default-src 'self'",
     `script-src ${scriptSrc}`,
-    "style-src 'self' 'unsafe-inline'",
-    "img-src 'self' blob: data: https://raw.githubusercontent.com https://assets.coingecko.com",
-    "font-src 'self'",
-    "connect-src 'self' https://api.pinata.cloud https://api.web3.storage https://vitals.vercel-insights.com",
+    `style-src 'self' 'unsafe-inline'${toolbar ? " https://vercel.live" : ""}`,
+    `img-src ${imgSrc}`,
+    `font-src ${fontSrc}`,
+    `connect-src ${connectSrc}`,
     "media-src 'self' blob: data:",
     "worker-src 'self' blob:",
     "object-src 'none'",
     "base-uri 'self'",
     "form-action 'self'",
-    "frame-src 'none'",
+    toolbar ? "frame-src https://vercel.live" : "frame-src 'none'",
     "frame-ancestors 'none'",
     isDev ? "" : "upgrade-insecure-requests",
   ]
@@ -73,17 +108,20 @@ function contentSecurityPolicy() {
     .join("; ");
 }
 
-function securityHeaders() {
+function securityHeaders(toolbar) {
   return [
-    { key: "Content-Security-Policy", value: contentSecurityPolicy() },
+    {
+      key: "Content-Security-Policy",
+      value: contentSecurityPolicy({ toolbar }),
+    },
     { key: "X-Frame-Options", value: "DENY" },
     { key: "X-Content-Type-Options", value: "nosniff" },
     { key: "Referrer-Policy", value: "strict-origin-when-cross-origin" },
     {
       key: "Permissions-Policy",
       value: [
-      "accelerometer=()",
-      "camera=()",
+        "accelerometer=()",
+        "camera=()",
         "display-capture=()",
         "geolocation=()",
         "gyroscope=()",
@@ -134,10 +172,20 @@ const nextConfig = {
     ];
   },
   async headers() {
+    const previewHost = {
+      type: "host",
+      value: ".*\\.vercel\\.app",
+    };
     return [
       {
         source: "/:path*",
-        headers: securityHeaders(),
+        has: [previewHost],
+        headers: securityHeaders(true),
+      },
+      {
+        source: "/:path*",
+        missing: [previewHost],
+        headers: securityHeaders(false),
       },
     ];
   },
