@@ -55,17 +55,18 @@ export function ProjectHeader({
             </div>
           </div>
 
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-2" data-beatbot="project-actions">
             <Button
               variant="outline"
               size="sm"
               onClick={onSave}
               disabled={isSaving}
+              data-beatbot-field="save-project"
             >
               <Save className="h-4 w-4 mr-2" />
               {isSaving ? "Saving..." : "Save"}
             </Button>
-            <Button size="sm" onClick={onExport}>
+            <Button size="sm" onClick={onExport} data-beatbot-field="export-project-file">
               <Download className="h-4 w-4 mr-2" />
               Export
             </Button>

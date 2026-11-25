@@ -20,9 +20,11 @@ export default function Header() {
             aria-label="App"
             className="flex flex-wrap items-center justify-end gap-2"
           >
-            <CreateProjectDialog />
+            <span data-beatbot="create-project" className="inline-flex">
+              <CreateProjectDialog />
+            </span>
             <Button asChild variant="outline" size="sm" className="gap-2">
-              <Link href="/settings">
+              <Link href="/settings" data-beatbot="settings">
                 <Settings className="h-4 w-4" aria-hidden="true" />
                 Settings
               </Link>

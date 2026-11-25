@@ -9,7 +9,7 @@ interface BrandMarkProps {
 
 export function BrandMark({ className }: BrandMarkProps) {
   return (
-    <div className={cn("flex min-w-0 flex-col gap-1.5", className)}>
+    <div className={cn("flex min-w-0 flex-col gap-1.5", className)} data-beatbot="brand">
       <Link
         href="/"
         className="max-w-[16rem] rounded-sm font-display text-sm font-bold leading-tight tracking-[0.06em] text-neon-cyan focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background dark:[text-shadow:0_0_12px_hsl(180_100%_50%/0.55)] sm:max-w-none sm:text-base"

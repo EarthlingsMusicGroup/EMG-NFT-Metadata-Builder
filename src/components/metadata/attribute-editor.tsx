@@ -29,6 +29,7 @@ export const AttributeEditor = memo(
                 <div className="flex-1 space-y-2">
                   <Input
                     value={attr.trait_type}
+                    data-beatbot-field="attribute-trait"
                     onChange={(e) =>
                       onUpdate(idx, "trait_type", e.target.value)
                     }
@@ -37,6 +38,7 @@ export const AttributeEditor = memo(
                   />
                   <Input
                     value={attr.value}
+                    data-beatbot-field="attribute-value"
                     onChange={(e) => onUpdate(idx, "value", e.target.value)}
                     placeholder="Value"
                     aria-label={`Attribute ${idx + 1} value`}

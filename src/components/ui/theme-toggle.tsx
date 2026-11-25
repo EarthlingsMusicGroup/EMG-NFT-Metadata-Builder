@@ -22,6 +22,7 @@ export function ThemeToggle() {
       size="icon"
       onClick={() => setTheme(isDark ? "light" : "dark")}
       aria-label={isDark ? "Switch to light mode" : "Switch to dark mode"}
+      data-beatbot="theme"
       className="cursor-pointer"
     >
       {isDark ? (

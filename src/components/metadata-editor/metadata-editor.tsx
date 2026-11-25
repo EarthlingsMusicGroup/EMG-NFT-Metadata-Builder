@@ -340,7 +340,7 @@ export function MetadataEditor({
 
   if (!currentEntry || !currentImage) {
     return (
-      <Card>
+      <Card data-beatbot="metadata-editor">
         <CardContent className="py-12">
           <Alert>
             <AlertCircle className="h-4 w-4" />
@@ -354,7 +354,7 @@ export function MetadataEditor({
   }
 
   return (
-    <Card>
+    <Card data-beatbot="metadata-editor">
       <CardHeader>
         <div className="flex items-center justify-between">
           <div>
@@ -369,10 +369,17 @@ export function MetadataEditor({
               variant="outline"
               size="sm"
               onClick={() => setShowBatchDialog(true)}
+              data-beatbot="batch-edit"
+              data-beatbot-field="batch-edit"
             >
               Batch Edit
             </Button>
-            <Button variant="outline" size="sm" onClick={handleRegenerateAll}>
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={handleRegenerateAll}
+              data-beatbot-field="reset-all"
+            >
               <RefreshCw className="h-4 w-4 mr-2" aria-hidden="true" />
               Reset All
             </Button>

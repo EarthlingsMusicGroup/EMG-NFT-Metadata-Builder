@@ -35,6 +35,7 @@ export const ChainConfigFields = memo(
               </Label>
               <Input
                 id="creator-address"
+                data-beatbot-field="creator-address"
                 value={projectConfig.creatorAddress}
                 onChange={(e) => onUpdate({ creatorAddress: e.target.value })}
                 placeholder="0x742d35Cc6634C0532925a3b8D4C9db96C4b4d8b6"
@@ -55,6 +56,7 @@ export const ChainConfigFields = memo(
               </Label>
               <Input
                 id="royalty-percentage"
+                data-beatbot-field="royalty-percentage"
                 type="number"
                 min="0"
                 max="10"
@@ -84,6 +86,7 @@ export const ChainConfigFields = memo(
               </Label>
               <Input
                 id="creator-address"
+                data-beatbot-field="creator-address"
                 value={projectConfig.creatorAddress}
                 onChange={(e) => onUpdate({ creatorAddress: e.target.value })}
                 placeholder="9WzDXwBbmkg8ZTbNMqUxvQRAyrZzDsGYdLVL9zYtAWWM"
@@ -101,6 +104,7 @@ export const ChainConfigFields = memo(
               </Label>
               <Input
                 id="symbol"
+                data-beatbot-field="token-symbol"
                 value={projectConfig.symbol}
                 onChange={(e) => onUpdate({ symbol: e.target.value })}
                 placeholder="ART"
@@ -121,6 +125,7 @@ export const ChainConfigFields = memo(
               </Label>
               <Input
                 id="royalty-percentage"
+                data-beatbot-field="royalty-percentage"
                 type="number"
                 min="0"
                 max="100"
@@ -150,6 +155,7 @@ export const ChainConfigFields = memo(
               </Label>
               <Input
                 id="creator-address"
+                data-beatbot-field="creator-address"
                 value={projectConfig.creatorAddress}
                 onChange={(e) => onUpdate({ creatorAddress: e.target.value })}
                 placeholder="rN7n7otQDd6FczFgLdSqtcsAUxDkw6fzRH"
@@ -177,7 +183,7 @@ export const ChainConfigFields = memo(
                   })
                 }
               >
-                <SelectTrigger>
+                <SelectTrigger data-beatbot-field="xrp-network">
                   <SelectValue placeholder="Select network" />
                 </SelectTrigger>
                 <SelectContent>
@@ -206,6 +212,7 @@ export const ChainConfigFields = memo(
               </Label>
               <Input
                 id="creator-address"
+                data-beatbot-field="creator-address"
                 value={projectConfig.creatorAddress}
                 onChange={(e) => onUpdate({ creatorAddress: e.target.value })}
                 placeholder="0x742d35Cc6634C0532925a3b8D4C9db96C4b4d8b6"
@@ -226,6 +233,7 @@ export const ChainConfigFields = memo(
               </Label>
               <Input
                 id="royalty-percentage"
+                data-beatbot-field="royalty-percentage"
                 type="number"
                 min="0"
                 max="10"
@@ -255,6 +263,7 @@ export const ChainConfigFields = memo(
               </Label>
               <Input
                 id="creator-address"
+                data-beatbot-field="creator-address"
                 value={projectConfig.creatorAddress}
                 onChange={(e) => onUpdate({ creatorAddress: e.target.value })}
                 placeholder="tz1KqTpEZ7Yob7QbPE4Hy4Wo8fHG8LhKxZSx"
@@ -275,6 +284,7 @@ export const ChainConfigFields = memo(
               </Label>
               <Input
                 id="royalty-percentage"
+                data-beatbot-field="royalty-percentage"
                 type="number"
                 min="0"
                 max="25"
@@ -304,6 +314,7 @@ export const ChainConfigFields = memo(
               </Label>
               <Input
                 id="creator-address"
+                data-beatbot-field="creator-address"
                 value={projectConfig.creatorAddress}
                 onChange={(e) => onUpdate({ creatorAddress: e.target.value })}
                 placeholder="addr1q9rl8..."
@@ -321,6 +332,7 @@ export const ChainConfigFields = memo(
               </Label>
               <Input
                 id="policy-id"
+                data-beatbot-field="policy-id"
                 value={projectConfig.policyId || ""}
                 onChange={(e) => onUpdate({ policyId: e.target.value })}
                 placeholder="56 character hex string"
@@ -346,6 +358,7 @@ export const ChainConfigFields = memo(
               </Label>
               <Input
                 id="creator-address"
+                data-beatbot-field="creator-address"
                 value={projectConfig.creatorAddress}
                 onChange={(e) => onUpdate({ creatorAddress: e.target.value })}
                 placeholder="alice.near"
@@ -363,6 +376,7 @@ export const ChainConfigFields = memo(
               </Label>
               <Input
                 id="copies"
+                data-beatbot-field="copies"
                 type="number"
                 min="1"
                 value={projectConfig.copies || 1}
@@ -391,6 +405,7 @@ export const ChainConfigFields = memo(
               </Label>
               <Input
                 id="creator-address"
+                data-beatbot-field="creator-address"
                 value={projectConfig.creatorAddress}
                 onChange={(e) => onUpdate({ creatorAddress: e.target.value })}
                 placeholder="0x1234567890abcdef"
@@ -411,6 +426,7 @@ export const ChainConfigFields = memo(
               </Label>
               <Input
                 id="resource-type"
+                data-beatbot-field="resource-type"
                 value={projectConfig.resourceType || "NFT"}
                 onChange={(e) => onUpdate({ resourceType: e.target.value })}
                 placeholder="NFT"
@@ -440,6 +456,7 @@ export const ChainConfigFields = memo(
               </Label>
               <Input
                 id="creator-address"
+                data-beatbot-field="creator-address"
                 value={projectConfig.creatorAddress}
                 onChange={(e) => onUpdate({ creatorAddress: e.target.value })}
                 placeholder="0x742d35Cc6634C0532925a3b8D4C9db96C4b4d8b6"
@@ -461,6 +478,7 @@ export const ChainConfigFields = memo(
               </Label>
               <Input
                 id="royalty-percentage"
+                data-beatbot-field="royalty-percentage"
                 type="number"
                 min="0"
                 max="10"

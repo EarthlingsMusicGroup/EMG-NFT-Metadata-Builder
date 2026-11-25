@@ -21,7 +21,12 @@ export function StepMetadata({
   onNext,
 }: StepMetadataProps) {
   return (
-    <div className="grid gap-6 lg:grid-cols-[1fr_400px]">
+    <div
+      className="grid gap-6 lg:grid-cols-[1fr_400px]"
+      data-beatbot="builder-step"
+      data-beatbot-step="metadata"
+      data-beatbot-chain={project.projectConfig.chain}
+    >
       <MetadataEditor
         selectedIndex={selectedMetadataIndex}
         onSelectIndex={onSelectMetadataIndex}

@@ -1,5 +1,6 @@
 import "./globals.css";
 
+import { BeatBotLoader } from "@/components/beatbot/loader";
 import { Footer } from "@/components/layout/footer";
 import Header from "@/components/layout/header";
 import { KeyboardShortcuts } from "@/components/keyboard-shortcuts";
@@ -106,6 +107,7 @@ export default function RootLayout({
           <div id="main-content">{children}</div>
           <Footer />
           <Toaster />
+          <BeatBotLoader />
           <Analytics />
         </ThemeProvider>
       </body>

@@ -12,7 +12,11 @@ interface StepImagesProps {
 
 export function StepImages({ project, onPrev, onNext }: StepImagesProps) {
   return (
-    <div className="max-w-5xl mx-auto">
+    <div
+      className="max-w-5xl mx-auto"
+      data-beatbot="builder-step"
+      data-beatbot-step="images"
+    >
       <MediaUploader />
       <StepNavigation
         project={project}

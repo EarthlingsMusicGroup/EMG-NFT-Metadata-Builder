@@ -103,6 +103,7 @@ export function CreateProjectDialog({
             <Label htmlFor="name">Project Name</Label>
             <Input
               id="name"
+              data-beatbot-field="project-name"
               placeholder="My NFT Collection"
               value={projectName}
               onChange={(e) => setProjectName(e.target.value)}
@@ -112,6 +113,7 @@ export function CreateProjectDialog({
             <Label htmlFor="description">Description (Optional)</Label>
             <Textarea
               id="description"
+              data-beatbot-field="project-description"
               placeholder="A unique NFT collection..."
               value={projectDescription}
               onChange={(e) => setProjectDescription(e.target.value)}
@@ -123,7 +125,7 @@ export function CreateProjectDialog({
               value={projectChain}
               onValueChange={(value: ChainType) => setProjectChain(value)}
             >
-              <SelectTrigger>
+              <SelectTrigger data-beatbot-field="project-chain">
                 <SelectValue placeholder="Select a blockchain" />
               </SelectTrigger>
               <SelectContent>

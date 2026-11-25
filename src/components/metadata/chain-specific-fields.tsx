@@ -24,6 +24,7 @@ export function ChainSpecificFields({
           <Label htmlFor="symbol">Symbol</Label>
           <Input
             id="symbol"
+            data-beatbot-field="token-symbol"
             value={metadata.symbol || ""}
             onChange={(e) => onUpdate({ symbol: e.target.value })}
             placeholder="NFT"
@@ -39,6 +40,7 @@ export function ChainSpecificFields({
             <Label htmlFor="schema">Schema</Label>
             <Input
               id="schema"
+              data-beatbot-field="xrp-schema"
               value={metadata.schema || ""}
               onChange={(e) => onUpdate({ schema: e.target.value })}
               placeholder="ipfs://..."
@@ -48,6 +50,7 @@ export function ChainSpecificFields({
             <Label htmlFor="nftType">NFT Type</Label>
             <Input
               id="nftType"
+              data-beatbot-field="xrp-nft-type"
               value={metadata.nftType || ""}
               onChange={(e) => onUpdate({ nftType: e.target.value })}
               placeholder="art.v0"
@@ -57,6 +60,7 @@ export function ChainSpecificFields({
             <Label htmlFor="issuer">Issuer Address</Label>
             <Input
               id="issuer"
+              data-beatbot-field="xrp-issuer"
               value={metadata.issuer || ""}
               onChange={(e) => onUpdate({ issuer: e.target.value })}
               placeholder="rN7n7otQDd6FczFgLdSqtcsAUxDkw6fzRH"
@@ -73,6 +77,7 @@ export function ChainSpecificFields({
             <Label htmlFor="mediaType">Media Type</Label>
             <Input
               id="mediaType"
+              data-beatbot-field="media-type"
               value={metadata.mediaType || ""}
               onChange={(e) => onUpdate({ mediaType: e.target.value })}
               placeholder="image/png"
@@ -82,6 +87,7 @@ export function ChainSpecificFields({
             <Label htmlFor="policyId">Policy ID</Label>
             <Input
               id="policyId"
+              data-beatbot-field="policy-id"
               value={metadata.mint?.policy_id || ""}
               onChange={(e) =>
                 onUpdate({
@@ -105,6 +111,7 @@ export function ChainSpecificFields({
             <Label htmlFor="copies">Copies</Label>
             <Input
               id="copies"
+              data-beatbot-field="copies"
               type="number"
               min="1"
               value={metadata.copies || 1}
@@ -118,6 +125,7 @@ export function ChainSpecificFields({
             <Label htmlFor="issuedAt">Issued At</Label>
             <Input
               id="issuedAt"
+              data-beatbot-field="issued-at"
               type="datetime-local"
               value={
                 metadata.issued_at
@@ -139,6 +147,7 @@ export function ChainSpecificFields({
             <Label htmlFor="artifactUri">Artifact URI</Label>
             <Input
               id="artifactUri"
+              data-beatbot-field="artifact-uri"
               value={metadata.artifactUri || ""}
               onChange={(e) => onUpdate({ artifactUri: e.target.value })}
               placeholder="ipfs://..."
@@ -148,6 +157,7 @@ export function ChainSpecificFields({
             <Label htmlFor="displayUri">Display URI</Label>
             <Input
               id="displayUri"
+              data-beatbot-field="display-uri"
               value={metadata.displayUri || ""}
               onChange={(e) => onUpdate({ displayUri: e.target.value })}
               placeholder="ipfs://..."
@@ -157,6 +167,7 @@ export function ChainSpecificFields({
             <Label htmlFor="minter">Minter Address</Label>
             <Input
               id="minter"
+              data-beatbot-field="minter"
               value={metadata.minter || ""}
               onChange={(e) => onUpdate({ minter: e.target.value })}
               placeholder="tz1KqTpEZ7Yob7QbPE4Hy4Wo8fHG8LhKxZSx"
@@ -173,6 +184,7 @@ export function ChainSpecificFields({
             <Label htmlFor="serialNumber">Serial Number</Label>
             <Input
               id="serialNumber"
+              data-beatbot-field="serial-number"
               type="number"
               min="1"
               value={metadata.serialNumber || index + 1}
@@ -186,8 +198,9 @@ export function ChainSpecificFields({
           </div>
           <div className="space-y-2">
             <Label htmlFor="resourceType">Resource Type</Label>
-            <Input
-              id="resourceType"
+              <Input
+                id="resourceType"
+                data-beatbot-field="resource-type"
               value={metadata.resourceType || "NFT"}
               onChange={(e) => onUpdate({ resourceType: e.target.value })}
               placeholder="NFT"

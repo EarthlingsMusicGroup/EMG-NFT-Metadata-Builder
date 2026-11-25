@@ -12,7 +12,7 @@ import Image from "next/image";
 
 export function SupportedChains() {
   return (
-    <Card className="mb-12 border-dashed">
+    <Card className="mb-12 border-dashed" data-beatbot="chains">
       <CardHeader>
         <CardTitle className="text-lg">Supported Blockchains</CardTitle>
         <CardDescription>

@@ -192,7 +192,7 @@ export function ExportPanel() {
 
   return (
     <>
-      <Card className="w-full mx-auto">
+      <Card className="w-full mx-auto" data-beatbot="export-panel">
         <CardHeader>
           <CardTitle>Export</CardTitle>
           <p className="text-sm text-muted-foreground">
@@ -226,6 +226,7 @@ export function ExportPanel() {
             <Label>Export Format</Label>
             <RadioGroup
               value={exportOptions.format}
+              data-beatbot-field="export-format"
               onValueChange={(value: "combined" | "separate") =>
                 setExportOptions({ format: value })
               }
@@ -266,6 +267,7 @@ export function ExportPanel() {
             </div>
             <Switch
               id="include-images"
+              data-beatbot-field="include-images"
               checked={exportOptions.includeImages}
               onCheckedChange={(checked) =>
                 setExportOptions({ includeImages: checked })

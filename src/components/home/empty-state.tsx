@@ -23,7 +23,7 @@ export function EmptyState({
   onFileChange,
 }: EmptyStateProps) {
   return (
-    <Empty className="border border-dashed">
+    <Empty className="border border-dashed" data-beatbot="get-started">
       <EmptyHeader>
         <EmptyMedia variant="icon">
           <Plus className="h-8 w-8" />

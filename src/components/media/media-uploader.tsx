@@ -214,6 +214,7 @@ export function MediaUploader() {
         </div>
 
         <div
+          data-beatbot-field="media-drop"
           onDragOver={handleDragOver}
           onDragLeave={handleDragLeave}
           onDrop={handleDrop}

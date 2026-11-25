@@ -28,7 +28,7 @@ export function StorageActions({
   projectCount,
 }: StorageActionsProps) {
   return (
-    <div className="flex items-center gap-3">
+    <div className="flex items-center gap-3" data-beatbot="storage-actions">
       <Button onClick={onExport} variant="outline" size="default">
         <Download className="h-4 w-4 mr-2" />
         Export Data

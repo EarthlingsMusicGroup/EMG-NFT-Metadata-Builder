@@ -2,7 +2,7 @@ const SPACEBAR_URL = "https://www.spacebar.music";
 
 export function HeroSection() {
   return (
-    <div className="text-center">
+    <div className="text-center" data-beatbot="hero">
       <h1 className="mb-3 text-3xl font-bold tracking-[0.04em] sm:text-4xl">
         Earthlings Music Metadata Builder
       </h1>

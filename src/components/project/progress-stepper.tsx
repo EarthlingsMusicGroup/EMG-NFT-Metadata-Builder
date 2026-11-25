@@ -14,7 +14,7 @@ export function ProgressStepper({
   onGoToStep,
 }: ProgressStepperProps) {
   return (
-    <div className="border-b border-border bg-card">
+    <div className="border-b border-border bg-card" data-beatbot="stepper">
       <div className="container mx-auto px-4 py-4">
         <div className="flex flex-col md:hidden">
           {steps.map((step, index) => {
