@@ -3,7 +3,7 @@ import { CheckCircle2 } from "lucide-react";
 
 export function HowItWorks() {
   return (
-    <Card>
+    <Card data-beatbot="how-it-works">
       <CardHeader>
         <CardTitle className="text-lg flex items-center gap-2">
           <CheckCircle2 className="h-5 w-5" />

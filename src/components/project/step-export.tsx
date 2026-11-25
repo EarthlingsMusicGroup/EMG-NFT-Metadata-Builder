@@ -10,7 +10,11 @@ interface StepExportProps {
 
 export function StepExport({ onPrev, onComplete }: StepExportProps) {
   return (
-    <div className="max-w-5xl mx-auto">
+    <div
+      className="max-w-5xl mx-auto"
+      data-beatbot="builder-step"
+      data-beatbot-step="export"
+    >
       <ExportPanel />
       <div className="flex justify-between pt-6">
         <Button variant="outline" onClick={onPrev}>

@@ -52,7 +52,7 @@ export function PreviewPanel({ selectedIndex = 0 }: PreviewPanelProps) {
   }
 
   return (
-    <Card className="h-fit sticky top-4">
+    <Card className="h-fit sticky top-4" data-beatbot="preview">
       <CardHeader>
         <CardTitle className="text-lg">Preview</CardTitle>
       </CardHeader>

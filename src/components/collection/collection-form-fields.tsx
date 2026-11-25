@@ -24,6 +24,7 @@ export const CollectionFormFields = memo(
           </Label>
           <Input
             id="collection-name"
+            data-beatbot-field="collection-name"
             value={projectConfig.collectionName}
             onChange={(e) => onUpdate({ collectionName: e.target.value })}
             placeholder={
@@ -48,6 +49,7 @@ export const CollectionFormFields = memo(
           </Label>
           <Textarea
             id="collection-description"
+            data-beatbot-field="collection-description"
             value={projectConfig.collectionDescription}
             onChange={(e) =>
               onUpdate({ collectionDescription: e.target.value })
@@ -71,6 +73,7 @@ export const CollectionFormFields = memo(
           </Label>
           <Input
             id="external-url"
+            data-beatbot-field="external-url"
             value={projectConfig.externalUrl}
             onChange={(e) => onUpdate({ externalUrl: e.target.value })}
             placeholder={

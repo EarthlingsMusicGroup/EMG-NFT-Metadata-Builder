@@ -69,6 +69,7 @@ function MediaFieldRow({
       <Label htmlFor={field}>{label}</Label>
       <Input
         id={field}
+        data-beatbot-field={field}
         value={value || ""}
         onChange={(e) => onChange(e.target.value)}
         placeholder={placeholder}
@@ -146,6 +147,7 @@ export const MetadataOptionalFields = memo(
           <Label htmlFor="external_url">External URL</Label>
           <Input
             id="external_url"
+            data-beatbot-field="external_url"
             value={metadata.external_url || ""}
             onChange={(e) => onFieldChange("external_url", e.target.value)}
             placeholder="https://..."
@@ -159,6 +161,7 @@ export const MetadataOptionalFields = memo(
               <Label htmlFor="background_color">Background Color</Label>
               <Input
                 id="background_color"
+                data-beatbot-field="background_color"
                 value={(metadata as any).background_color || ""}
                 onChange={(e) =>
                   onFieldChange("background_color", e.target.value)
@@ -176,6 +179,7 @@ export const MetadataOptionalFields = memo(
               <Label htmlFor="animation_url">Animation URL</Label>
               <Input
                 id="animation_url"
+                data-beatbot-field="animation_url"
                 value={(metadata as any).animation_url || ""}
                 onChange={(e) => onFieldChange("animation_url", e.target.value)}
                 placeholder="https://..."
@@ -225,6 +229,7 @@ export const MetadataOptionalFields = memo(
               <Label htmlFor="collection.name">Collection Name</Label>
               <Input
                 id="collection.name"
+                data-beatbot-field="collection-object-name"
                 value={(metadata as any).collection?.name || ""}
                 onChange={(e) =>
                   onFieldChange("collection.name", e.target.value)

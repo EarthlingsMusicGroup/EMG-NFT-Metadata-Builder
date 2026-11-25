@@ -33,7 +33,7 @@ export const AdvancedSettings = memo(
               onUpdate({ storageType: value as "local" | "ipfs" | "custom" })
             }
           >
-            <SelectTrigger>
+            <SelectTrigger data-beatbot-field="storage-type">
               <SelectValue placeholder="Select storage type" />
             </SelectTrigger>
             <SelectContent>
@@ -52,6 +52,7 @@ export const AdvancedSettings = memo(
             <Label htmlFor="custom-base-url">Custom Base URL</Label>
             <Input
               id="custom-base-url"
+              data-beatbot-field="custom-base-url"
               value={projectConfig.customBaseUrl || ""}
               onChange={(e) => onUpdate({ customBaseUrl: e.target.value })}
               placeholder="https://yourdomain.com/metadata/"

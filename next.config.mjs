@@ -17,6 +17,10 @@ const WWW_HOST = "www.earthlingsmusic.com";
  * contains Next.js flight bootstrap scripts (`self.__next_f`) and the
  * next-themes inline script. Neither has a stable hash.
  *
+ * `'wasm-unsafe-eval'` lets BeatBot's same-origin Draco decoder compile
+ * WebAssembly. It does not enable eval of scripts. The decoder worker is a
+ * blob URL, covered by worker-src.
+ *
  * `'unsafe-inline'` is required in style-src because React, Radix, and
  * motion set style attributes (CSP applies style-src to attributes unless
  * style-src-attr is split out, and that split still needs
@@ -28,11 +32,14 @@ const WWW_HOST = "www.earthlingsmusic.com";
  *   `images.remotePatterns`). Previews are blob: URLs from IndexedDB.
  * - media-src: audio and video previews are blob: URLs.
  * - connect-src: Pinata and Web3.Storage upload endpoints from
- *   `src/lib/ipfs.ts`. Custom IPFS gateways are written into metadata and
- *   are not fetched by the app. Vercel Analytics loads
- *   `/_vercel/insights/script.js` and beacons to `/_vercel/insights`
- *   (same origin). `va.vercel-scripts.com` is the dev debug script only.
- *   `vitals.vercel-insights.com` is the documented analytics fallback.
+ *   `src/lib/ipfs.ts`. `blob:` is BeatBot's embedded GLB texture.
+ *   GLTFLoader reads that image through a blob URL, and Chromium
+ *   applies connect-src to that fetch. Custom IPFS gateways are
+ *   written into metadata and are not fetched by the app. Vercel
+ *   Analytics loads `/_vercel/insights/script.js` and beacons to
+ *   `/_vercel/insights` (same origin). `va.vercel-scripts.com` is the
+ *   dev debug script only. `vitals.vercel-insights.com` is the
+ *   documented analytics fallback.
  * - font-src: next/font self-hosts Montserrat, Orbitron, and Geist Mono.
  * - Preview deployments on `*.vercel.app` also allow the Vercel Toolbar
  *   (`https://vercel.live`, `https://vercel.com`, `https://assets.vercel.com`,
@@ -53,6 +60,7 @@ function contentSecurityPolicy({ toolbar = false } = {}) {
   const scriptSrc = [
     "'self'",
     "'unsafe-inline'",
+    "'wasm-unsafe-eval'",
     isDev ? "'unsafe-eval'" : "",
     isDev ? "https://va.vercel-scripts.com" : "",
     toolbar ? "https://vercel.live" : "",
@@ -80,6 +88,7 @@ function contentSecurityPolicy({ toolbar = false } = {}) {
 
   const connectSrc = [
     "'self'",
+    "blob:",
     "https://api.pinata.cloud",
     "https://api.web3.storage",
     "https://vitals.vercel-insights.com",
@@ -142,6 +151,7 @@ function securityHeaders(toolbar) {
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  agentRules: false,
   typescript: {
     ignoreBuildErrors: true,
   },

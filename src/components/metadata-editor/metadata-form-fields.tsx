@@ -24,6 +24,7 @@ export const MetadataFormFields = memo(
           <Label htmlFor="name">Name</Label>
           <Input
             id="name"
+            data-beatbot-field="item-name"
             value={metadata.name || ""}
             onChange={(e) => onFieldChange("name", e.target.value)}
             placeholder="Enter NFT name"
@@ -35,6 +36,7 @@ export const MetadataFormFields = memo(
           <Label htmlFor="description">Description</Label>
           <Textarea
             id="description"
+            data-beatbot-field="item-description"
             value={metadata.description || ""}
             onChange={(e) => onFieldChange("description", e.target.value)}
             placeholder="Enter NFT description"
@@ -47,6 +49,7 @@ export const MetadataFormFields = memo(
           <Label htmlFor="image">Image</Label>
           <Input
             id="image"
+            data-beatbot-field="item-image"
             value={metadata.image || ""}
             onChange={(e) => onFieldChange("image", e.target.value)}
             placeholder="Image filename or URL"

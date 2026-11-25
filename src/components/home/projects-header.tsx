@@ -18,7 +18,7 @@ export function ProjectsHeader({
   onFileChange,
 }: ProjectsHeaderProps) {
   return (
-    <div className="flex items-center justify-between mb-8">
+    <div className="flex items-center justify-between mb-8" data-beatbot="projects">
       <div>
         <h1 className="text-3xl font-bold tracking-tight mb-2">
           Your Projects

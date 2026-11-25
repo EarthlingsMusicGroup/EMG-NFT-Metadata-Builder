@@ -147,7 +147,10 @@ export function IPFSUpload({
   ]);
 
   return (
-    <div className="space-y-3 p-4 border rounded-lg bg-muted/30">
+    <div
+      className="space-y-3 p-4 border rounded-lg bg-muted/30"
+      data-beatbot="ipfs"
+    >
       <div className="flex items-center justify-between">
         <div className="space-y-0.5">
           <Label htmlFor="ipfs-upload">Upload to IPFS</Label>
@@ -157,6 +160,7 @@ export function IPFSUpload({
         </div>
         <Switch
           id="ipfs-upload"
+          data-beatbot-field="ipfs-upload"
           checked={exportOptions.uploadToIPFS}
           onCheckedChange={(checked) =>
             onUpdateOptions({ uploadToIPFS: checked })
@@ -174,7 +178,7 @@ export function IPFSUpload({
                 onUpdateOptions({ ipfsProvider: value as IPFSProviderType })
               }
             >
-              <SelectTrigger id="ipfs-provider">
+              <SelectTrigger id="ipfs-provider" data-beatbot-field="ipfs-provider">
                 <SelectValue placeholder="Select provider" />
               </SelectTrigger>
               <SelectContent>
@@ -193,6 +197,7 @@ export function IPFSUpload({
             </Label>
             <Input
               id="ipfs-api-key"
+              data-beatbot-field="ipfs-api-key"
               type="password"
               value={exportOptions.ipfsApiKey || ""}
               onChange={(e) => onUpdateOptions({ ipfsApiKey: e.target.value })}
@@ -204,6 +209,7 @@ export function IPFSUpload({
             <Label htmlFor="ipfs-gateway">IPFS Gateway (Optional)</Label>
             <Input
               id="ipfs-gateway"
+              data-beatbot-field="ipfs-gateway"
               value={exportOptions.ipfsGateway || ""}
               onChange={(e) => onUpdateOptions({ ipfsGateway: e.target.value })}
               placeholder="https://ipfs.io/ipfs/"

@@ -16,7 +16,12 @@ export function StepCollection({
   onNext,
 }: StepCollectionProps) {
   return (
-    <div className="max-w-5xl mx-auto">
+    <div
+      className="max-w-5xl mx-auto"
+      data-beatbot="builder-step"
+      data-beatbot-step="collection"
+      data-beatbot-chain={project.projectConfig.chain}
+    >
       <DynamicCollectionForm project={project} onUpdate={onUpdate} />
       <StepNavigation
         project={project}
