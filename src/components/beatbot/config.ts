@@ -37,8 +37,9 @@ export type FieldTip = {
 };
 
 /**
- * Everything BeatBot says and plays lives here. Copy this folder, point
- * `assetBase` at the static files, and mount `<BeatBotLoader />`.
+ * Lines, tours, and tips live here. The glb, audio, and Draco decoder are
+ * real files in `public/beatbot/` and are served at `assetBase`. Mount
+ * `<BeatBotLoader />` once.
  */
 export const BEATBOT = {
   storageKey: "beatbot.prefs.v1",

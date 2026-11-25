@@ -1,6 +1,6 @@
 # BeatBot
 
-Self-contained guide widget for Earthlings / SpaceBar sites. Copy this folder into another app, serve `assets/` at the `assetBase` URL (this repo symlinks `public/beatbot` → `assets/`), and mount `<BeatBotLoader />` once in the root layout.
+Self-contained guide widget for Earthlings / SpaceBar sites. Copy this folder into another app, publish the model, audio, and Draco decoder at the `assetBase` URL, and mount `<BeatBotLoader />` once in the root layout. In this repo those files are real files in `public/beatbot/` (not a symlink), so Next and Vercel serve them at `/beatbot/`.
 
 BeatBot (Beat “BB” Bot) is the Earthlings HQ tour guide. He explains the page he is mounted on. He does not call a model or a backend.
 
@@ -10,9 +10,12 @@ BeatBot (Beat “BB” Bot) is the Earthlings HQ tour guide. He explains the pag
 - `checks.ts` — plain-language checks aligned with this app's validation
 - `beatbot-widget.tsx` — bubble, tour, help menu, mute, dismiss
 - `beatbot-scene.tsx` — lazy 3D view (three.js / react-three-fiber)
-- `assets/beatbot.glb` — Draco-compressed mesh (`KHR_draco_mesh_compression`)
-- `assets/draco/` — decoder from three.js (`draco_wasm_wrapper.js`, `draco_decoder.wasm`)
-- `assets/audio/` — Kenney CC0 beeps as `.ogg`, `.mp3`, and `.m4a`. See `assets/audio/LICENSES.md`
+
+Static files live in `public/beatbot/`, one copy, no symlink:
+
+- `public/beatbot/beatbot.glb` — Draco-compressed mesh (`KHR_draco_mesh_compression`)
+- `public/beatbot/draco/` — decoder from three.js (`draco_wasm_wrapper.js`, `draco_decoder.wasm`)
+- `public/beatbot/audio/` — Kenney CC0 beeps as `.ogg`, `.mp3`, and `.m4a`. See `public/beatbot/audio/LICENSES.md`
 
 ## Wire-up
 
@@ -33,6 +36,6 @@ Content Security Policy needs `'wasm-unsafe-eval'` in `script-src` so the Draco 
 
 ## Dropping this into spacebar.music
 
-Copy the folder. Point `assetBase`, `modelUrl`, and `dracoPath` at wherever you publish `assets/`. Replace the strings in `config.ts` with that site's pages and fields. `checks.ts` can stay or be swapped for the other app's rules. Peers: `react`, `react-dom`, `three`, `@react-three/fiber`, `@react-three/drei`.
+Copy this folder and publish `public/beatbot/` (the glb, `audio/`, and `draco/`) as real files at the `assetBase` URL. Do not symlink that folder into the component directory; Vercel cannot copy a symlink into a subdirectory of itself. Point `assetBase`, `modelUrl`, and `dracoPath` at those URLs. Replace the strings in `config.ts` with that site's pages and fields. `checks.ts` can stay or be swapped for the other app's rules. Peers: `react`, `react-dom`, `three`, `@react-three/fiber`, `@react-three/drei`.
 
 The mesh and texture are SpaceBar's Earthlings assets. The audio files are Kenney CC0, with MP3 and AAC transcodes for iOS Safari (see the license file). The Draco decoder is Apache-2.0, shipped with three.js.
