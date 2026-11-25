@@ -4,10 +4,15 @@ import { EmptyView } from "@/components/home/empty-view";
 import { ProjectsView } from "@/components/home/projects-view";
 import { useProjectStore } from "@/lib/project-store";
 import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
 import { toast } from "sonner";
 
 export default function HomePage() {
   const router = useRouter();
+  const [hydrated, setHydrated] = useState(false);
+  useEffect(() => {
+    setHydrated(true);
+  }, []);
   const {
     deleteProject,
     duplicateProject,
@@ -15,7 +20,7 @@ export default function HomePage() {
     getAllProjectSummaries,
   } = useProjectStore();
 
-  const projectSummaries = getAllProjectSummaries();
+  const projectSummaries = hydrated ? getAllProjectSummaries() : [];
 
   const handleImportProject = async (file: File) => {
     try {

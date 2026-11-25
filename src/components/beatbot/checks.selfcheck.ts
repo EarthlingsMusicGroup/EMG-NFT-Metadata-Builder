@@ -102,6 +102,20 @@ assert.equal(
 const symbol = resolveFieldTip("token-symbol", { value: "", chain: "solana" });
 assert.equal(symbol?.note, "Symbol is required on Solana.");
 
+const collection = resolveFieldTip("collection-name", {
+  value: "",
+  chain: "ethereum",
+});
+assert.equal(
+  collection?.note,
+  "Enter a collection name to continue. Images stay locked until it isn't blank.",
+);
+assert.equal(
+  resolveFieldTip("collection-name", { value: "Signal", chain: "ethereum" })
+    ?.note,
+  null,
+);
+
 for (const tour of BEATBOT.tours) {
   assert.ok(tour.steps.length > 0);
   for (const step of tour.steps) {

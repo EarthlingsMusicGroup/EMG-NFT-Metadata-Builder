@@ -64,6 +64,7 @@ export function BeatBotScene({ reduced }: SceneProps) {
         }}
       >
         <Suspense fallback={null}>
+          <ReleaseGpu />
           <Rig />
           <ambientLight intensity={0.85} />
           <directionalLight position={[1.8, 2.6, 2.4]} intensity={1.2} />
@@ -77,6 +78,16 @@ export function BeatBotScene({ reduced }: SceneProps) {
       </Canvas>
     </SceneBoundary>
   );
+}
+
+function ReleaseGpu() {
+  const gl = useThree((state) => state.gl);
+  useEffect(() => {
+    return () => {
+      gl.dispose();
+    };
+  }, [gl]);
+  return null;
 }
 
 function Rig() {

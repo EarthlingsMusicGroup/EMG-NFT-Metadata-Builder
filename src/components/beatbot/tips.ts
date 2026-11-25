@@ -30,10 +30,17 @@ export function resolveFieldTip(
     max: reading.max,
     ipfsOn: reading.ipfsOn,
   };
+  const empty = reading.value.trim() === "";
+  let note: string | null = null;
+  if (empty && tip.required) {
+    note = tip.requiredNote ?? "This field is required.";
+  } else if (check) {
+    note = explainCheck(check, reading.value, extra);
+  }
   return {
     id: fieldId,
     text: tipText(tip, reading.chain),
-    note: check ? explainCheck(check, reading.value, extra) : null,
+    note,
   };
 }
 
