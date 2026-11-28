@@ -53,14 +53,14 @@ export const CREW = [
     title: "Founder",
   },
   {
-    src: "/landing/char01.jpg",
-    name: 'Jay "Buckets" Hydes',
-    title: "Janitor",
+    src: "/landing/char17.jpg",
+    name: "FAZE.ONE",
+    title: "Founder",
   },
   {
-    src: "/landing/char05.jpg",
-    name: 'Bugsy "Doom" Reddick',
-    title: "Executive Director",
+    src: "/landing/char13.jpg",
+    name: "Rico",
+    title: "Head of IT",
   },
   {
     src: "/landing/char07.jpg",
@@ -73,9 +73,9 @@ export const CREW = [
     title: "Head of Security",
   },
   {
-    src: "/landing/char10.jpg",
-    name: 'Tommy "The Bull" Starski',
-    title: "Spacecraft Pilot",
+    src: "/landing/char12.jpg",
+    name: 'Elroy "Figgs" Figgleton',
+    title: "Head of Accounting",
   },
 ] as const;
 
