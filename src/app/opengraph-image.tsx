@@ -58,7 +58,7 @@ export default async function OpenGraphImage() {
             </div>
           </div>
           <div style={{ fontSize: 22, color: "#A8A196" }}>
-            28 Genesis characters · 13+ chains · local and private
+            Fully open source · 13+ chains · local and private
           </div>
         </div>
         <div
