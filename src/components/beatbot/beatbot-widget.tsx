@@ -69,7 +69,15 @@ export function BeatBotWidget() {
   const [helpOpen, setHelpOpen] = useState(false);
   const [notice, setNotice] = useState<string | null>(null);
   const [slim, setSlim] = useState(false);
-  const [corner, setCorner] = useState<Corner>("bl");
+  const [landingTourCompleted, setLandingTourCompleted] = useState(
+    initial.current.landingTourCompleted,
+  );
+  const [narrow, setNarrow] = useState(
+    () =>
+      typeof window !== "undefined" &&
+      window.matchMedia("(max-width: 640px)").matches,
+  );
+  const [corner, setCorner] = useState<Corner>(pathname === "/" ? "br" : "bl");
 
   const rootRef = useRef<HTMLDivElement>(null);
   const helpRef = useRef<HTMLDivElement>(null);
@@ -94,6 +102,14 @@ export function BeatBotWidget() {
   }
 
   useEffect(() => {
+    const media = window.matchMedia("(max-width: 640px)");
+    const apply = () => setNarrow(media.matches);
+    apply();
+    media.addEventListener("change", apply);
+    return () => media.removeEventListener("change", apply);
+  }, []);
+
+  useEffect(() => {
     const root = document.getElementById("main-content");
     if (!root) return;
     const narrow = window.matchMedia("(max-width: 640px)").matches;
@@ -101,7 +117,7 @@ export function BeatBotWidget() {
     return () => {
       root.style.paddingBottom = "";
     };
-  }, [collapsed, dismissed, slim]);
+  }, [collapsed, dismissed, slim, pathname]);
 
   useEffect(() => {
     const read = () => {
@@ -216,6 +232,9 @@ export function BeatBotWidget() {
     : -1;
 
   const stepTip = builderStep ? BEATBOT.stepTips[builderStep] : undefined;
+  const earthlings = page === "landing";
+  const inviteText = earthlings ? BEATBOT.landingInvite : BEATBOT.invite;
+  const inviteDone = earthlings ? landingTourCompleted : tourCompleted;
   const speech: Speech = tour && tourStep
     ? {
         id: `tour:${tour.id}:${tourStep.id}`,
@@ -230,10 +249,10 @@ export function BeatBotWidget() {
           note: fieldTip.note,
           cue: "tick",
         }
-            : !tourCompleted
+            : !inviteDone
               ? {
                   id: "invite",
-                  text: BEATBOT.invite,
+                  text: inviteText,
                   note: null,
                   cue: "none",
                 }
@@ -284,9 +303,10 @@ export function BeatBotWidget() {
       box.width || 300,
       box.height || 320,
       target?.getBoundingClientRect() ?? null,
+      page === "landing" ? "br" : "bl",
     );
     setCorner((current) => (current === next ? current : next));
-  }, [visible, slim, tourStep, speech.id, typed.length === speech.text.length]);
+  }, [visible, slim, tourStep, speech.id, page, typed.length === speech.text.length]);
 
   useEffect(() => {
     const onKey = (event: KeyboardEvent) => {
@@ -336,11 +356,17 @@ export function BeatBotWidget() {
   }
 
   function endTour(completed: boolean) {
+    const finished = tourId;
     setTourId(null);
     setTourStepId(null);
     if (completed) {
-      setTourCompleted(true);
-      commit({ tourCompleted: true });
+      if (finished === "earthlings") {
+        setLandingTourCompleted(true);
+        commit({ landingTourCompleted: true });
+      } else {
+        setTourCompleted(true);
+        commit({ tourCompleted: true });
+      }
       playCue("confirm");
     }
   }
@@ -361,13 +387,16 @@ export function BeatBotWidget() {
   }
 
   const highlight = tourStep ? findTarget(tourStep.targets) : null;
+  const dock: Corner = earthlings && !narrow ? "br" : "bl";
+  const landingSheet = earthlings && narrow && !slim;
 
   if (dismissed) {
     return (
       <div
         data-beatbot-root=""
+        data-earthlings={earthlings ? "" : undefined}
         className="fixed z-40 touch-manipulation"
-        style={cornerStyle("bl", false)}
+        style={cornerStyle(dock, false)}
       >
         <button
           type="button"
@@ -390,20 +419,17 @@ export function BeatBotWidget() {
     return (
       <div
         data-beatbot-root=""
+        data-earthlings={earthlings ? "" : undefined}
         className="fixed z-40 touch-manipulation"
-        style={cornerStyle("bl", false)}
+        style={cornerStyle(dock, false)}
       >
         <button
           type="button"
-          className="flex h-11 w-11 items-center justify-center rounded-full border border-border bg-card shadow-md touch-manipulation focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background"
-          aria-label={
-            tourCompleted
-              ? "Open BeatBot"
-              : "Open BeatBot. A short tour is waiting."
-          }
+          className="bb-collapsed flex h-11 w-11 items-center justify-center rounded-full border border-border bg-card shadow-md touch-manipulation focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background"
+          aria-label={BEATBOT.label}
           aria-expanded="false"
           onClick={() => {
-            if (tourCompleted) {
+            if (inviteDone) {
               unlockFromGesture();
               playCue("open");
             } else {
@@ -424,7 +450,11 @@ export function BeatBotWidget() {
 
   return (
     <>
-      <style>{TARGET_STYLE}</style>
+      <style>
+        {earthlings
+          ? TARGET_STYLE.replace("var(--neon-cyan)", "#F4A63A")
+          : TARGET_STYLE}
+      </style>
       {highlight
         ? createPortal(
             <Highlight target={highlight} reduced={reduced} />,
@@ -434,28 +464,37 @@ export function BeatBotWidget() {
       <div
         ref={rootRef}
         data-beatbot-root=""
+        data-earthlings={earthlings ? "" : undefined}
         role="complementary"
-        aria-label={`${BEATBOT.title}, ${BEATBOT.subtitle}`}
+        aria-label={BEATBOT.label}
         className={`fixed touch-manipulation ${slim ? "z-[70]" : "z-40"} ${
-          slim ? "w-auto" : "w-[min(19rem,calc(100vw-1.5rem))]"
+          slim || landingSheet ? "w-auto" : "w-[min(19rem,calc(100vw-1.5rem))]"
         }`}
-        style={cornerStyle(corner, slim)}
+        style={
+          landingSheet
+            ? {
+                left: "max(0.75rem, env(safe-area-inset-left))",
+                right: "max(0.75rem, env(safe-area-inset-right))",
+                bottom: "max(0.75rem, env(safe-area-inset-bottom))",
+              }
+            : cornerStyle(corner, slim)
+        }
       >
-        <div className="rounded-xl border border-border bg-card text-card-foreground shadow-lg">
-          <div className="flex items-center gap-2 border-b border-border px-3 py-2">
+        <div className="bb-card rounded-xl border border-border bg-card text-card-foreground shadow-lg">
+          <div className="bb-rule flex items-center gap-2 border-b border-border px-3 py-2">
             <Monogram className="h-7 w-7 shrink-0" />
             <div className="min-w-0">
               <p className="font-display text-sm font-semibold leading-tight tracking-[0.02em]">
                 {BEATBOT.title}
               </p>
-              <p className="text-[11px] leading-tight text-muted-foreground">
+              <p className="bb-muted text-[11px] leading-tight text-muted-foreground">
                 {BEATBOT.subtitle}
               </p>
             </div>
           </div>
 
           {!slim ? (
-            <div className="h-36 w-full" aria-hidden="true">
+            <div className="bb-stage h-36 w-full" aria-hidden="true">
               <BeatBotScene reduced={reduced} />
             </div>
           ) : null}
@@ -467,7 +506,7 @@ export function BeatBotWidget() {
             </p>
             <div
               aria-hidden="true"
-              className="max-h-[30vh] overflow-y-auto overscroll-contain text-sm leading-snug break-words sm:max-h-40"
+              className="bb-message max-h-[30vh] overflow-y-auto overscroll-contain text-sm leading-snug break-words sm:max-h-40"
             >
               <p>
                 {typed}
@@ -515,7 +554,9 @@ export function BeatBotWidget() {
                 <button
                   type="button"
                   className={buttonClass(true)}
-                  onClick={() => beginTour(BEATBOT.autoTourId)}
+                  onClick={() =>
+                    beginTour(earthlings ? "earthlings" : BEATBOT.autoTourId)
+                  }
                 >
                   Show me
                 </button>
@@ -524,8 +565,13 @@ export function BeatBotWidget() {
                   className={buttonClass(false)}
                   onClick={() => {
                     unlockFromGesture();
-                    setTourCompleted(true);
-                    commit({ tourCompleted: true });
+                    if (earthlings) {
+                      setLandingTourCompleted(true);
+                      commit({ landingTourCompleted: true });
+                    } else {
+                      setTourCompleted(true);
+                      commit({ tourCompleted: true });
+                    }
                     setNotice(BEATBOT.optedOut);
                   }}
                 >
@@ -535,7 +581,7 @@ export function BeatBotWidget() {
             ) : null}
           </div>
 
-          <div className="relative flex flex-wrap items-center gap-1 border-t border-border p-2">
+          <div className="bb-rule relative flex flex-wrap items-center gap-1 border-t border-border p-2">
             <button
               ref={helpButtonRef}
               type="button"
@@ -556,14 +602,16 @@ export function BeatBotWidget() {
                 id="beatbot-help"
                 role="menu"
                 aria-label="BeatBot help topics"
-                className={`absolute left-2 z-10 max-h-60 w-[min(16rem,calc(100vw-2rem))] overflow-y-auto overscroll-contain rounded-lg border border-border bg-popover p-1 text-popover-foreground shadow-md ${
+                className={`bb-menu absolute left-2 z-10 max-h-60 w-[min(16rem,calc(100vw-2rem))] overflow-y-auto overscroll-contain rounded-lg border border-border bg-popover p-1 text-popover-foreground shadow-md ${
                   corner === "tl" || corner === "tr" || slim
                     ? "top-full mt-1"
                     : "bottom-full mb-1"
                 }`}
                 onKeyDown={(event) => moveMenu(event, helpRef.current)}
               >
-                {BEATBOT.tours.map((item) => (
+                {BEATBOT.tours
+                  .filter((item) => !item.pages || item.pages.includes(page))
+                  .map((item) => (
                   <button
                     key={item.id}
                     type="button"
@@ -617,8 +665,13 @@ export function BeatBotWidget() {
                 setTourStepId(null);
                 setDismissed(true);
                 setHelpOpen(false);
-                setTourCompleted(true);
-                commit({ dismissed: true, tourCompleted: true });
+                if (earthlings) {
+                  setLandingTourCompleted(true);
+                  commit({ dismissed: true, landingTourCompleted: true });
+                } else {
+                  setTourCompleted(true);
+                  commit({ dismissed: true, tourCompleted: true });
+                }
               }}
             >
               <CloseIcon />
@@ -783,6 +836,7 @@ function pickCorner(
   width: number,
   height: number,
   target: DOMRect | null,
+  prefer: Corner = "bl",
 ): Corner {
   const margin = 12;
   const spots: Record<Corner, { x: number; y: number }> = {
@@ -794,8 +848,9 @@ function pickCorner(
     tl: { x: margin, y: 76 },
     tr: { x: window.innerWidth - width - margin, y: 76 },
   };
-  const order: Corner[] = ["bl", "br", "tr", "tl"];
-  if (!target) return "bl";
+  const order: Corner[] =
+    prefer === "br" ? ["br", "bl", "tr", "tl"] : ["bl", "br", "tr", "tl"];
+  if (!target) return prefer;
   for (const name of order) {
     const spot = spots[name];
     const overlaps = !(
@@ -849,13 +904,13 @@ function buttonClass(primary: boolean): string {
     "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background",
     "disabled:pointer-events-none disabled:opacity-40",
     primary
-      ? "bg-primary text-primary-foreground"
-      : "border border-border bg-card text-foreground",
+      ? "bb-primary bg-primary text-primary-foreground"
+      : "bb-ghost border border-border bg-card text-foreground",
   ].join(" ");
 }
 
 function iconButtonClass(): string {
-  return "inline-flex h-11 w-11 items-center justify-center rounded-md border border-border text-foreground touch-manipulation focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background";
+  return "bb-icon inline-flex h-11 w-11 items-center justify-center rounded-md border border-border text-foreground touch-manipulation focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background";
 }
 
 function SoundIcon() {

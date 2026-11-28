@@ -1,9 +1,6 @@
 import "./globals.css";
 
 import { BeatBotLoader } from "@/components/beatbot/loader";
-import { Footer } from "@/components/layout/footer";
-import Header from "@/components/layout/header";
-import { KeyboardShortcuts } from "@/components/keyboard-shortcuts";
 import { ThemeProvider } from "@/components/layout/theme-provider";
 import { Toaster } from "@/components/ui/sonner";
 import { SITE_URL } from "@/lib/site";
@@ -21,7 +18,7 @@ const montserrat = Montserrat({
 const orbitron = Orbitron({
   subsets: ["latin"],
   variable: "--font-display",
-  weight: ["500", "600", "700", "800"],
+  weight: ["500", "600", "700", "800", "900"],
 });
 
 const geistMono = Geist_Mono({ subsets: ["latin"], variable: "--font-mono" });
@@ -43,33 +40,30 @@ export const metadata: Metadata = {
   creator: "Bankk",
   keywords: [
     "Earthlings Music",
-    "SpaceBar",
-    "spacebar.music",
-    "NFT",
-    "metadata",
-    "blockchain",
-    "Ethereum",
-    "Solana",
-    "XRP",
-    "XRPL",
-    "IPFS",
-    "web3",
+    "artists",
+    "Genesis Collection",
+    "Metadata Builder",
   ],
-  alternates: {
-    canonical: "/",
-  },
   openGraph: {
     title: APP_NAME,
     description: DESCRIPTION,
     type: "website",
-    url: "/",
     siteName: "Earthlings Music Metadata Builder",
   },
   twitter: {
     card: "summary_large_image",
     title: APP_NAME,
     description: DESCRIPTION,
-    site: "@spacebar_music",
+    site: "@musicearthlings",
+  },
+  icons: {
+    icon: [
+      { url: "/brand/favicon-32.png", sizes: "32x32", type: "image/png" },
+      { url: "/brand/favicon-512.png", sizes: "512x512", type: "image/png" },
+    ],
+    apple: [
+      { url: "/brand/favicon-180.png", sizes: "180x180", type: "image/png" },
+    ],
   },
 };
 
@@ -102,10 +96,7 @@ export default function RootLayout({
           >
             Skip to content
           </a>
-          <KeyboardShortcuts />
-          <Header />
-          <div id="main-content">{children}</div>
-          <Footer />
+          {children}
           <Toaster />
           <BeatBotLoader />
           <Analytics />

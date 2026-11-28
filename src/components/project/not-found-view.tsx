@@ -14,9 +14,9 @@ export function NotFoundView() {
         <p className="text-muted-foreground mb-4">
           The project you're looking for doesn't exist.
         </p>
-        <Button onClick={() => router.push("/")}>
+        <Button onClick={() => router.push("/builder")}>
           <ArrowLeft className="h-4 w-4 mr-2" />
-          Back to Home
+          Back to the Builder
         </Button>
       </div>
     </div>

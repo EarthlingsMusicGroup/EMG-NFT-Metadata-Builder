@@ -1,6 +1,6 @@
 import type { CheckName } from "./checks";
 
-export type PageId = "home" | "project" | "settings";
+export type PageId = "home" | "project" | "settings" | "landing";
 
 export type SoundCue =
   | "greeting"
@@ -25,6 +25,8 @@ export type Tour = {
   id: string;
   title: string;
   summary: string;
+  /** Omit to offer the tour on every page. */
+  pages?: PageId[];
   steps: TourStep[];
 };
 
@@ -82,9 +84,12 @@ export const BEATBOT = {
     ],
   },
   title: "BeatBot",
-  subtitle: "Earthlings HQ – Tour Guide",
+  subtitle: "Your Earthlings guide",
+  label: "BeatBot, your Earthlings guide",
   invite:
     "I'm BeatBot. Call me BB. Want a short look around, or should I wait until you focus a field?",
+  landingInvite:
+    "I'm BeatBot. Call me BB. Want a quick tour of the Earthlings, or should I hang back?",
   idle: "Focus a field and I'll explain it. Help replays the tour or jumps to a topic.",
   optedOut: "I'll stay quiet. Help is here whenever you want the tour.",
   stepTips: {
@@ -325,6 +330,7 @@ export const BEATBOT = {
       id: "look",
       title: "Look around",
       summary: "A short tour of the builder.",
+      pages: ["home", "project", "settings"],
       steps: [
         {
           id: "welcome",
@@ -405,6 +411,7 @@ export const BEATBOT = {
       id: "builder",
       title: "The four steps",
       summary: "Collection, images, metadata, export.",
+      pages: ["home", "project", "settings"],
       steps: [
         {
           id: "steps",
@@ -434,6 +441,7 @@ export const BEATBOT = {
       id: "metadata",
       title: "Metadata fields",
       summary: "What the item form checks.",
+      pages: ["home", "project", "settings"],
       steps: [
         {
           id: "editor",
@@ -462,6 +470,7 @@ export const BEATBOT = {
       id: "export",
       title: "Export",
       summary: "JSON, ZIP, and optional IPFS.",
+      pages: ["home", "project", "settings"],
       steps: [
         {
           id: "files",
@@ -483,6 +492,7 @@ export const BEATBOT = {
       id: "privacy",
       title: "Privacy and storage",
       summary: "What stays on this device.",
+      pages: ["home", "project", "settings"],
       steps: [
         {
           id: "local",
@@ -498,6 +508,50 @@ export const BEATBOT = {
           targets: ["storage-actions"],
           allowMissing: true,
           text: "Export Data downloads a backup JSON. Clear All Data asks you to confirm, then removes every project and file from this browser.",
+        },
+      ],
+    },
+    {
+      id: "earthlings",
+      title: "The Earthlings",
+      summary: "A quick tour of this page.",
+      pages: ["landing"],
+      steps: [
+        {
+          id: "welcome",
+          cue: "step",
+          targets: ["landing-hero"],
+          text: "Hey, I'm BeatBot. Call me BB. This is Earthlings Music: artists, fans, and collectors, with tools built around the people who make the music.",
+        },
+        {
+          id: "about",
+          cue: "step",
+          targets: ["landing-about"],
+          text: "About is the idea. Artists own their story, fans take part, and every release, character, and tool is built to keep.",
+        },
+        {
+          id: "crew",
+          cue: "step",
+          targets: ["landing-crew"],
+          text: "The Crew. Twenty-eight Genesis characters, each with a title and a story. These six are a few of the faces.",
+        },
+        {
+          id: "builder",
+          cue: "step",
+          targets: ["landing-builder"],
+          text: "The Metadata Builder creates, edits, and exports metadata for the chains you release on. No accounts, no servers, and your projects stay in this browser.",
+        },
+        {
+          id: "community",
+          cue: "step",
+          targets: ["landing-community"],
+          text: "Community is where new music, hangouts, and builder help happen. Discord, the open-source repo, and SpaceBar.Music are the doors in.",
+        },
+        {
+          id: "close",
+          cue: "step",
+          targets: [],
+          text: "That's the map. Open the Builder when you want to start a project. Help replays this tour.",
         },
       ],
     },

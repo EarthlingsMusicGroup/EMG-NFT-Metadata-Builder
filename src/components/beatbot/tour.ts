@@ -1,6 +1,7 @@
 import type { PageId, Tour, TourStep } from "./config";
 
 export function pageFromPath(pathname: string): PageId {
+  if (pathname === "/") return "landing";
   if (pathname.startsWith("/p/")) return "project";
   if (pathname.startsWith("/settings")) return "settings";
   return "home";
