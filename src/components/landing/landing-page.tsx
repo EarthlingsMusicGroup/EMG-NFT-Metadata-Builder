@@ -218,8 +218,8 @@ export function LandingPage() {
                 Music with a little more gravity.
               </h2>
               <p className="text-[15.5px] leading-relaxed text-[#C4BBAE] min-[900px]:text-[17px]">
-                Earthlings Music is a label and community where artists own
-                their story and fans take part in it. Every release, character
+                Earthlings Music is a community driven by artists, where they
+                own their story and fans take part in it. Every release, character
                 and tool is built with the same idea: make it easy to create,
                 easy to share, and yours to keep.
               </p>
@@ -496,7 +496,9 @@ export function LandingPage() {
               <p className="font-display text-[13px] font-bold tracking-[0.12em]">
                 EARTHLINGS MUSIC GROUP
               </p>
-              <p className="text-[13px] text-[#C4BBAE]">A Web3 record label</p>
+              <p className="text-[13px] text-[#C4BBAE]">
+                A Web3 community driven by artists
+              </p>
             </div>
           </div>
           <div className="text-left text-[13px] text-[#82A0AA] min-[900px]:text-right">
