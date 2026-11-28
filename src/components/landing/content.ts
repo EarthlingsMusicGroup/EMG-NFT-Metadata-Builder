@@ -94,8 +94,8 @@ export const PILLARS = [
   },
   {
     index: "03",
-    title: "Built with SpaceBar.Music",
-    body: "Open, practical tools from the team behind SpaceBar.Music.",
+    title: "Powered by SpaceBar.Music",
+    body: "Open, practical tools powered by the team behind SpaceBar.Music.",
     swatch: "bg-[#2BB3A8]",
   },
 ] as const;
