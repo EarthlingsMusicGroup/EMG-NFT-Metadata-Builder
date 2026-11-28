@@ -2,7 +2,7 @@
 
 Self-contained guide widget for Earthlings / SpaceBar sites. Copy this folder into another app, publish the model, audio, and Draco decoder at the `assetBase` URL, and mount `<BeatBotLoader />` once in the root layout. In this repo those files are real files in `public/beatbot/` (not a symlink), so Next and Vercel serve them at `/beatbot/`.
 
-BeatBot (Beat “BB” Bot) is the Earthlings HQ tour guide. He explains the page he is mounted on. He does not call a model or a backend.
+BeatBot (Beat “BB” Bot) is your Earthlings guide. He explains the page he is mounted on. He does not call a model or a backend.
 
 ## What lives here
 

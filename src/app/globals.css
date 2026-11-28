@@ -243,3 +243,116 @@
     }
   }
 }
+
+/*
+  Earthlings landing page. Locked to the dark palette: the white E mark and
+  the white SpaceBar logo are only used on black or midnight.
+*/
+.em-landing ::selection {
+  background: rgba(244, 166, 58, 0.45);
+  color: #16120b;
+}
+
+.em-landing :focus-visible {
+  outline-color: #f4a63a;
+}
+
+.em-hero {
+  background:
+    radial-gradient(900px 420px at 72% 78%, rgba(244, 166, 58, 0.55), transparent 70%),
+    radial-gradient(700px 500px at 12% 10%, rgba(43, 179, 168, 0.28), transparent 70%),
+    linear-gradient(180deg, #0f1013 0%, #1a1612 52%, #3a2412 78%, #121315 100%);
+}
+
+.em-hero-grain {
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='emgrain'><feTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2'/><feColorMatrix values='0 0 0 0 1  0 0 0 0 1  0 0 0 0 1  0 0 0 .08 0'/></filter><rect width='100%' height='100%' filter='url(%23emgrain)'/></svg>");
+  opacity: 0.7;
+  mix-blend-mode: overlay;
+}
+
+[data-earthlings] .bb-card {
+  position: relative;
+  border-color: #2f3036;
+  border-radius: 16px;
+  background: #17181b;
+  color: #f5efe6;
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.6);
+}
+
+[data-earthlings] .bb-card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  right: 0;
+  left: 0;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, #f4a63a, transparent);
+  pointer-events: none;
+}
+
+[data-earthlings] .bb-rule {
+  border-color: #2a2b30;
+}
+
+[data-earthlings] .bb-muted,
+[data-earthlings] .bb-menu .text-muted-foreground {
+  color: #a8a196;
+}
+
+[data-earthlings] .bb-stage {
+  background: radial-gradient(180px 90px at 50% 100%, rgba(244, 166, 58, 0.22), transparent);
+}
+
+[data-earthlings] .bb-message {
+  color: #efe8dc;
+}
+
+[data-earthlings] .bb-primary {
+  background: #f4a63a;
+  color: #16120b;
+}
+
+[data-earthlings] .bb-primary:hover,
+[data-earthlings] .bb-primary:focus-visible {
+  background: #ffc15e;
+}
+
+[data-earthlings] .bb-primary:active {
+  background: #e0942e;
+}
+
+[data-earthlings] .bb-ghost {
+  border-color: #3a3b42;
+  background: transparent;
+  color: #f5efe6;
+}
+
+[data-earthlings] .bb-ghost:hover,
+[data-earthlings] .bb-ghost:focus-visible {
+  border-color: #f4a63a;
+  background: rgba(255, 255, 255, 0.05);
+}
+
+[data-earthlings] .bb-icon {
+  border-color: #33343a;
+  color: #f5efe6;
+}
+
+[data-earthlings] .bb-icon:hover,
+[data-earthlings] .bb-icon:focus-visible {
+  border-color: #f4a63a;
+}
+
+[data-earthlings] .bb-menu {
+  border-color: #2f3036;
+  background: #1c1d21;
+  color: #f5efe6;
+}
+
+[data-earthlings] .bb-collapsed {
+  border: 2px solid #f4a63a;
+  background: #1f2024;
+  box-shadow:
+    0 10px 28px rgba(0, 0, 0, 0.6),
+    0 0 0 6px rgba(244, 166, 58, 0.14);
+}

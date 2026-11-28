@@ -2,7 +2,7 @@
 
 **Privacy First**: No accounts, no servers, no data collection. Your projects are stored locally and never leave your device.
 
-A standalone companion powered by [SpaceBar.Music](https://www.spacebar.music). The canonical site is [earthlingsmusic.com](https://earthlingsmusic.com). [emgbuilder.spacebar.music](https://emgbuilder.spacebar.music) stays attached as an alias. The main SpaceBar site stays a separate app. This builder links back to it and does not share a backend or API keys.
+A standalone companion powered by [SpaceBar.Music](https://www.spacebar.music). The canonical site is [earthlingsmusic.com](https://earthlingsmusic.com): `/` is the Earthlings Music landing page and `/builder` is the Metadata Builder. [emgbuilder.spacebar.music](https://emgbuilder.spacebar.music) is the same deployment, and its `/` permanently redirects to `/builder`. The main SpaceBar site stays a separate app. This builder links back to it and does not share a backend or API keys.
 
 ## Overview
 
@@ -10,7 +10,7 @@ Earthlings Music Metadata Builder is a web application for creating, editing, an
 
 The application is fully client-side with no backend required. All data is stored locally in the browser using IndexedDB, ensuring privacy and offline capability. Keys for Pinata and Web3.Storage stay in the browser and are entered by the person using the app.
 
-The visual identity follows The Space Bar: dark nebula background, Orbitron headings, Montserrat body text, and neon cyan / green accents. The live site does not publish a standalone logo file (its favicon is a photograph of the bar), so this app uses an Orbitron text wordmark plus a generated “EM” favicon.
+The builder keeps the Space Bar look: dark nebula background, Orbitron headings, Montserrat body text, and neon cyan / green accents. The landing page uses the Earthlings palette (amber, teal, midnight) with the same two fonts. The favicon is the Earthlings E logo.
 
 Originally the EMG NFT Metadata Builder by [Bankk](https://github.com/BankkRoll). The MIT license is unchanged.
 

@@ -6,6 +6,8 @@ const __dirname = dirname(__filename);
 
 const SITE_URL = "https://earthlingsmusic.com";
 const WWW_HOST = "www.earthlingsmusic.com";
+/** Same deployment. Keep in sync with `BUILDER_HOST` in `src/lib/site.ts`. */
+const BUILDER_HOST = "emgbuilder.spacebar.music";
 
 /**
  * Static CSP. `headers()` is fixed at build time, so it cannot mint a
@@ -173,6 +175,14 @@ const nextConfig = {
   },
   async redirects() {
     return [
+      {
+        // Promoted links on spacebar.music point at this host's root.
+        // Keep that root on the builder after the landing page takes `/`.
+        source: "/",
+        has: [{ type: "host", value: BUILDER_HOST }],
+        destination: "/builder",
+        permanent: true,
+      },
       {
         source: "/:path*",
         has: [{ type: "host", value: WWW_HOST }],

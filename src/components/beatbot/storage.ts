@@ -5,6 +5,7 @@ export type BeatBotPrefs = {
   collapsed: boolean | null;
   muted: boolean;
   tourCompleted: boolean;
+  landingTourCompleted: boolean;
 };
 
 const DEFAULTS: BeatBotPrefs = {
@@ -12,6 +13,7 @@ const DEFAULTS: BeatBotPrefs = {
   collapsed: null,
   muted: false,
   tourCompleted: false,
+  landingTourCompleted: false,
 };
 
 export function loadPrefs(): BeatBotPrefs {
@@ -26,6 +28,7 @@ export function loadPrefs(): BeatBotPrefs {
         typeof parsed.collapsed === "boolean" ? parsed.collapsed : null,
       muted: parsed.muted === true,
       tourCompleted: parsed.tourCompleted === true,
+      landingTourCompleted: parsed.landingTourCompleted === true,
     };
   } catch {
     return { ...DEFAULTS };

@@ -15,9 +15,22 @@ assert.equal(
 );
 assert.equal(chooseFormat(() => ""), "m4a");
 
-assert.equal(pageFromPath("/"), "home");
+assert.equal(pageFromPath("/"), "landing");
+assert.equal(pageFromPath("/builder"), "home");
 assert.equal(pageFromPath("/p/abc"), "project");
 assert.equal(pageFromPath("/settings"), "settings");
+assert.equal(BEATBOT.label, "BeatBot, your Earthlings guide");
+assert.equal(BEATBOT.subtitle, "Your Earthlings guide");
+assert.equal(
+  BEATBOT.landingInvite,
+  "I'm BeatBot. Call me BB. Want a quick tour of the Earthlings, or should I hang back?",
+);
+assert.equal(
+  BEATBOT.invite,
+  "I'm BeatBot. Call me BB. Want a short look around, or should I wait until you focus a field?",
+);
+assert.equal(/\bHQ\b/.test(BEATBOT.label), false);
+assert.equal(/\bHQ\b/.test(BEATBOT.subtitle), false);
 
 const welcome = BEATBOT.tours[0].steps[0];
 assert.equal(stepMatchesPage(welcome, "project"), true);
@@ -106,6 +119,9 @@ for (const tour of BEATBOT.tours) {
   assert.ok(tour.steps.length > 0);
   for (const step of tour.steps) {
     assert.equal(mentionsMinting(step.text), false);
+    assert.equal(/\bHQ\b/.test(step.text), false);
+    assert.equal(/\bfunds\b/i.test(step.text), false);
+    assert.equal(/\bCNC\b/.test(step.text), false);
   }
 }
 for (const tip of Object.values(BEATBOT.fields)) {

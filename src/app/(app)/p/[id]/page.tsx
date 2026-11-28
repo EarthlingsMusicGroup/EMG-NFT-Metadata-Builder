@@ -136,7 +136,7 @@ export default function ProjectPage() {
   const handleComplete = () => {
     updateProject(project.id, { status: "ready" });
     toast.success("Project completed successfully!");
-    router.push("/");
+    router.push("/builder");
   };
 
   return (
